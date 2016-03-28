@@ -9,9 +9,19 @@
   color: white;
 }
 
+#home-hero {
+  background-color: black;
+  height: 150px;
+}
+
 .home-body-image {
   height: 280px;
   width: 280px;
+}
+
+.profile-picture-thumbnail {
+  height: 70px;
+  width: 70px;
 }
 
 /*Onle Used For Testing. Will Remove Once Project Is Complete.*/
