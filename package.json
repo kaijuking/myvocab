@@ -1,0 +1,24 @@
+{
+  "name": "myvocab",
+  "version": "1.0.0",
+  "description": "A simple flash card application.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaijuking/myvocab.git"
+  },
+  "author": "Michael Field",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaijuking/myvocab/issues"
+  },
+  "homepage": "https://github.com/kaijuking/myvocab#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4"
+  }
+}

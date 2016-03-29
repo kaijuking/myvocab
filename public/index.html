@@ -8,82 +8,179 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   </head>
   <body>
-    <div class='jumbotron' id='hero'>
-      <div class='container' id='div-login'>
-        <div class='row'>
-          <div class='col-md-6 col-md-offset-6 col-sm-12 col-xs-6'>
-            <form class="form-inline">
-              <div class="form-group">
-                <label class="sr-only" for="login-username">Username</label>
-                <input type="text" class="form-control" id="login-username" placeholder="Username">
-              </div>
-              <div class="form-group">
-                <label class="sr-only" for="login-password">Password</label>
-                <input type="password" class="form-control" id="login-password" placeholder="Password">
-              </div>
-              <button type="submit" class="btn btn-default">Sign in</button>
-            </form>
-            <form class='form-inline'>
-              <div class="form-group checkbox">
-                <label>
-                  <input type="checkbox"> Remember Me
-                </label>
-              </div>
-              <div class='form-group'>
-                <a href='#'>Create An Account</a>
-              </div>
-            </form>
+    <div class='show' id='login-page'>
+      <div class='jumbotron' id='hero'>
+        <div class='container' id='div-login'>
+          <div class='row'>
+            <div class='col-md-6 col-md-offset-6 col-sm-12 col-xs-6'>
+              <form class="form-inline" method='post' id='form-login'>
+                <div class="form-group">
+                  <label class="sr-only" for="login-username">Username</label>
+                  <input type="text" class="form-control" id="login-username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                  <label class="sr-only" for="login-password">Password</label>
+                  <input type="password" class="form-control" id="login-password" placeholder="Password">
+                </div>
+                <button type="button" id='btn-login' class="btn btn-default">Sign in</button>
+              </form>
+              <form class='form-inline'>
+                <div class="form-group checkbox">
+                  <label>
+                    <input type="checkbox"> Remember Me
+                  </label>
+                </div>
+                <div class='form-group'>
+                  <a href='#'>Create An Account</a>
+                </div>
+              </form>
+            </div>
           </div>
+        </div>
+        <div class='container'>
+          <div class="page-header">
+            <h1>Welcome to MyVocab!</h1>
+            <h3>An online learning center where you can create and share your own flash cards!<h3>
+          </div>
+        </div>
+      </div>
+      <div class='container' id='home-body'>
+        <div class='row'>
+          <div class='col-md-12'>
+            <div class='container'>
+              <img class="img-rounded home-body-image" src="images/osakaflu.jpg" alt="...">
+            </div>
+            <br>
+            <div class="container">
+              <h4 class="media-heading">Create A Deck</h4>
+              <p>Lorem ipsum dolor sit amet, ex eam idque vocibus fuisset, tota inani rationibus ut mel, sea ea rationibus deseruisse. Amet tollit repudiandae cu ius. Ex saepe latine cotidieque eum, iisque numquam accusamus vel ex. Id meis quaeque consequat est, eos decore verterem hendrerit in.
+              Et sea suscipit recusabo. Ut equidem pertinax eum, ei velit harum viris mel. Eum vide referrentur id, est no munere recusabo argumentum, cu cetero molestiae dissentias mei. Tibique convenire vix ex, ut eam causae labores, id quo elit mazim erroribus.</p>
+            </div>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <div class='container'>
+              <img class="img-rounded home-body-image" src="images/osakaflu.jpg" alt="...">
+            </div>
+            <br>
+            <div class="container">
+              <h4 class="media-heading">Review Your Cards</h4>
+              <p>Lorem ipsum dolor sit amet, ex eam idque vocibus fuisset, tota inani rationibus ut mel, sea ea rationibus deseruisse. Amet tollit repudiandae cu ius. Ex saepe latine cotidieque eum, iisque numquam accusamus vel ex. Id meis quaeque consequat est, eos decore verterem hendrerit in.
+              Et sea suscipit recusabo. Ut equidem pertinax eum, ei velit harum viris mel. Eum vide referrentur id, est no munere recusabo argumentum, cu cetero molestiae dissentias mei. Tibique convenire vix ex, ut eam causae labores, id quo elit mazim erroribus.</p>
+            </div>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <div class='container'>
+              <img class="img-rounded home-body-image" src="images/osakaflu.jpg" alt="...">
+            </div>
+            <br>
+            <div class="container">
+              <h4 class="media-heading">TBD TBD TBD</h4>
+              <p>Lorem ipsum dolor sit amet, ex eam idque vocibus fuisset, tota inani rationibus ut mel, sea ea rationibus deseruisse. Amet tollit repudiandae cu ius. Ex saepe latine cotidieque eum, iisque numquam accusamus vel ex. Id meis quaeque consequat est, eos decore verterem hendrerit in.
+              Et sea suscipit recusabo. Ut equidem pertinax eum, ei velit harum viris mel. Eum vide referrentur id, est no munere recusabo argumentum, cu cetero molestiae dissentias mei. Tibique convenire vix ex, ut eam causae labores, id quo elit mazim erroribus.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End of Login, Star of Home-->
+    <div class='hide' id='home-page'>
+      <div class="navbar-wrapper">
+        <div class="container">
+          <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <!-- <img class="navbar-brand-image" src='./public/images/osakaflu.jpg' alt='...'> -->
+                <a class="navbar-brand" href="#">My Vocab</a>
+              </div>
+              <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="#">Home</a></li>
+                  <li><a href="#about">About</a></li>
+                  <li><a href="#contact">Resources</a></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">Account Settings</a></li>
+                      <li><a href="#">Logout</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
         </div>
       </div>
       <div class='container'>
-        <div class="page-header">
-          <h1>Welcome to MyVocab!</h1>
-          <h3>An online learning center where you can create and share your own flash cards!<h3>
+        <div class='row'>
+          <div class='col-md-12 col-xs-12'>
+            <div class='panel panel-default'>
+              <div class='panel-body'>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active"><a href="#profile" aria-controls="home" role="tab" data-toggle="tab">Profile</a></li>
+                  <li role="presentation"><a href="#profile" aria-controls="mydecks" role="tab" data-toggle="tab">My Decks</a></li>
+                  <li role="presentation"><a href="#messages" aria-controls="mycards" role="tab" data-toggle="tab">My Cards</a></li>
+                  <li role="presentation"><a href="#settings" aria-controls="search" role="tab" data-toggle="tab">Search</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="profile-tab">
+                    <div class='panel panel-default'>
+                      <div class='panel-body'>
+                        <div class="media">
+                          <div class="media-left media-middle">
+                            <img class="media-object profile-picture img-thumbnail" id='user-profile-picture' src="images/test.png" alt="...">
+                          </div>
+                          <div class="media-body well">
+                            <label for="user-username">Username: </label><span class='span-space' id='user-username'></span><br>
+                            <label for="user-email">Email: </label><span class='span-space' id='user-email'></span><br>
+                            <label for="user-deckcount">Number of Decks: </label><span class='span-space' id='user-deckcount'></span></br>
+                            <label for="user-member-since">Member Since: </label><span class='span-space' id='user-member-since'></span><br>
+                            <label for="user-description">Background</label><br>
+                            <span id='user-description'></span>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class='table-responsive'>
+                          <table class='table table-hover' id='table-user-decks'>
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Deck Title</th>
+                                <th>Number of Cards</th>
+                                <th>Description</th>
+                                <th>Created On</th>
+                              </tr>
+                            </thead>
+                            <tbody id='user-profile-deck-table'>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="mydecks-tab">...</div>
+                  <div role="tabpanel" class="tab-pane" id="mycards-tab">...</div>
+                  <div role="tabpanel" class="tab-pane" id="search-tab">...</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class='container' id='home-body'>
-      <div class='row'>
-        <div class='col-md-12'>
-          <div class='container'>
-            <img class="img-rounded home-body-image" src="images/osakaflu.jpg" alt="...">
-          </div>
-          <br>
-          <div class="container">
-            <h4 class="media-heading">Create A Deck</h4>
-            <p>Lorem ipsum dolor sit amet, ex eam idque vocibus fuisset, tota inani rationibus ut mel, sea ea rationibus deseruisse. Amet tollit repudiandae cu ius. Ex saepe latine cotidieque eum, iisque numquam accusamus vel ex. Id meis quaeque consequat est, eos decore verterem hendrerit in.
-            Et sea suscipit recusabo. Ut equidem pertinax eum, ei velit harum viris mel. Eum vide referrentur id, est no munere recusabo argumentum, cu cetero molestiae dissentias mei. Tibique convenire vix ex, ut eam causae labores, id quo elit mazim erroribus.</p>
-          </div>
-        </div>
-      </div>
-      <div class='row'>
-        <div class='col-md-12'>
-          <div class='container'>
-            <img class="img-rounded home-body-image" src="images/osakaflu.jpg" alt="...">
-          </div>
-          <br>
-          <div class="container">
-            <h4 class="media-heading">Review Your Cards</h4>
-            <p>Lorem ipsum dolor sit amet, ex eam idque vocibus fuisset, tota inani rationibus ut mel, sea ea rationibus deseruisse. Amet tollit repudiandae cu ius. Ex saepe latine cotidieque eum, iisque numquam accusamus vel ex. Id meis quaeque consequat est, eos decore verterem hendrerit in.
-            Et sea suscipit recusabo. Ut equidem pertinax eum, ei velit harum viris mel. Eum vide referrentur id, est no munere recusabo argumentum, cu cetero molestiae dissentias mei. Tibique convenire vix ex, ut eam causae labores, id quo elit mazim erroribus.</p>
-          </div>
-        </div>
-      </div>
-      <div class='row'>
-        <div class='col-md-12'>
-          <div class='container'>
-            <img class="img-rounded home-body-image" src="images/osakaflu.jpg" alt="...">
-          </div>
-          <br>
-          <div class="container">
-            <h4 class="media-heading">TBD TBD TBD</h4>
-            <p>Lorem ipsum dolor sit amet, ex eam idque vocibus fuisset, tota inani rationibus ut mel, sea ea rationibus deseruisse. Amet tollit repudiandae cu ius. Ex saepe latine cotidieque eum, iisque numquam accusamus vel ex. Id meis quaeque consequat est, eos decore verterem hendrerit in.
-            Et sea suscipit recusabo. Ut equidem pertinax eum, ei velit harum viris mel. Eum vide referrentur id, est no munere recusabo argumentum, cu cetero molestiae dissentias mei. Tibique convenire vix ex, ut eam causae labores, id quo elit mazim erroribus.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <script  src='js/default.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   </body>

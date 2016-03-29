@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang='en-us'>
+  <head>
+    <title>MyVocab</title>
+    <meta charset="utf-8">
+    <link rel='stylesheet' href='css/default.css'>
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+        <nav class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <!-- <img class="navbar-brand-image" src='./public/images/osakaflu.jpg' alt='...'> -->
+              <a class="navbar-brand" href="#">My Vocab</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Resources</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Account Settings</a></li>
+                    <li><a href="#">Logout</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class='container'>
+      <div class='row'>
+        <div class='col-md-12 col-xs-12'>
+          <div class='panel panel-default'>
+            <div class='panel-body'>
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#profile" aria-controls="home" role="tab" data-toggle="tab">Profile</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="mydecks" role="tab" data-toggle="tab">My Decks</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="mycards" role="tab" data-toggle="tab">My Cards</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="search" role="tab" data-toggle="tab">Search</a></li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="profile-tab">
+                  <div class='panel panel-default'>
+                    <div class='panel-body'>
+                      <div class="media">
+                        <div class="media-left media-middle">
+                          <a href="#">
+                            <img class="media-object profile-picture img-thumbnail" src="images/osakaflu.jpg" alt="...">
+                          </a>
+                        </div>
+                        <div class="media-body well">
+                          <label for="user-username">Username: </label><span id='user-username'></span><br>
+                          <label for="user-email">Email: </label><span id='user-email'></span><label for="user-deckcount">Number of Decks: </label><span id='user-deckcount'></span></br>
+                          <label for="user-member-since">Member Since: </label><span id='user-member-since'></span><br>
+                          <label for="user-description">Background</label><br>
+                          <span id='user-description'>BLAH BLAH BLAH BLAH</span>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class='table-responsive'>
+                        <table class='table table-hover' id='table-user-decks'>
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Deck Title</th>
+                              <th>Number of Cards</th>
+                              <th>Description</th>
+                              <th>Created On</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th>1</th>
+                              <th><a href='#'>JLPT N2 Verbs</a></th>
+                              <th>50</th>
+                              <th>A small selection of verbs for the JLPT N2 test.</th>
+                              <th>3/28/2016</th>
+                            </tr>
+                            <tr>
+                              <th>1</th>
+                              <th><a href='#'>JLPT N2 Verbs</a></th>
+                              <th>50</th>
+                              <th>A small selection of verbs for the JLPT N2 test.</th>
+                              <th>3/28/2016</th>
+                            </tr>
+                            <tr>
+                              <th>1</th>
+                              <th><a href='#'>JLPT N2 Verbs</a></th>
+                              <th>50</th>
+                              <th>A small selection of verbs for the JLPT N2 test.</th>
+                              <th>3/28/2016</th>
+                            </tr>
+                            <tr>
+                              <th>1</th>
+                              <th><a href='#'>JLPT N2 Verbs</a></th>
+                              <th>50</th>
+                              <th>A small selection of verbs for the JLPT N2 test.</th>
+                              <th>3/28/2016</th>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="mydecks-tab">...</div>
+                <div role="tabpanel" class="tab-pane" id="mycards-tab">...</div>
+                <div role="tabpanel" class="tab-pane" id="search-tab">...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </body>
+</html>
