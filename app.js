@@ -8,7 +8,6 @@ var app = express();
 /*Required Data Objects*/
 var allUsers = require('./user.js');
 var allDecks = require('./decks.js');
-// var flashCards = require('./flashcards.js');
 
 var defaultMiddleware = express.static('./public');
 app.use(defaultMiddleware);
@@ -37,7 +36,14 @@ app.post('/login', jsonParser, function(req, res) {
 
 /*Check To See If User Has A Valid Session Or Not*/
 app.get('/session', function(req, res) {
-  console.log('tbd');
+  if(req.cookies.myvocabRemember) {
+    var cookie = req.cookies.myvocabRemember;
+    var stringArray = cookie.split('-', 2);
+    var username = stringArray[1];
+    res.send(username);
+  } else {
+    res.send(false);
+  }
 });
 
 /*Populate The User's Profile Page*/
@@ -74,7 +80,22 @@ app.post('/loadProfile', jsonParser, function(req, res) {
 
 /*Populate The Deck Dropdown List With The Names Of The User's Decks*/
 app.post('/deckDropDown', jsonParser, function(req, res) {
-  console.log('tbd');
+  var username = req.body.username;
+  var decks = [];
+  var result = false;
+
+  for(var i = 0; i < allDecks.length; i++) {
+    if(allDecks[i].username === username) {
+      result = true;
+      decks.push(allDecks[i].deckname);
+    };
+  };
+
+  if(result != false) {
+    res.json(decks);
+  } else {
+    res.send(result);
+  }
 });
 
 /*Populate The My Decks Tab With Data For a Particular Deck*/

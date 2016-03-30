@@ -11,7 +11,34 @@ document.addEventListener('click', function(event) {
   }
 
   if(theTarget.getAttribute('data-id') === 'user-mydecks') {
+    console.log('test');
+    var session = new XMLHttpRequest();
+    session.open('GET', '/session', true);
+    session.send();
+
+    session.addEventListener('load', function() {
+      var username = session.responseText;
+
+      if(username != null) {
+        var info = {username: username};
+        var user = JSON.stringify(info);
+
+        var dropdown = new XMLHttpRequest();
+        dropdown.open('POST', '/deckDropDown', true);
+        dropdown.setRequestHeader('Content-Type', 'application/json');
+        dropdown.send(user);
+
+        dropdown.addEventListener('load', function() {
+          console.log(dropdown.responseText);
+          var deckNames = JSON.parse(dropdown.responseText);
+          console.log(deckNames);
+          loadDropDown(deckNames);
+        })
+      }
+    })
+
     $('#tab-user-mydecks a[href="#user-mydecks"]').tab('show');
+
   }
 
   if(theTarget.getAttribute('data-id') === 'user-mycards') {
@@ -268,8 +295,31 @@ function loadDeck(deckname, content) {
         row.appendChild(theType);
         row.appendChild(edit);
         tableBody.appendChild(row);
-      }
-    }
+      };
+    };
+  };
+};
+
+function loadDropDown(decknames) {
+  var dropdown = document.getElementById('deck-dropdown');
+  var items = document.getElementById('deck-dropdown-items');
+
+  if(decknames != null) {
+    dropdown.removeChild(items);
+    var newItems = document.createElement('ul');
+    newItems.setAttribute('class', 'dropdown-menu');
+    newItems.setAttribute('aria-labelledby', 'deck-dropdown');
+    newItems.setAttribute('id', 'deck-dropdown-items');
   }
 
-};
+  /*Populate The Dropdown Menu With Deck Names*/
+  for(var i = 0; i < decknames.length; i++) {
+    var item = document.createElement('li');
+    var link = document.createElement('a');
+    link.setAttribute('href', '#');
+    link.textContent = decknames[i];
+    item.appendChild(link);
+    newItems.appendChild(item);
+    dropdown.appendChild(newItems);
+  }
+}
