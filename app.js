@@ -12,17 +12,48 @@ var allDecks = require('./decks.js');
 
 var defaultMiddleware = express.static('./public');
 app.use(defaultMiddleware);
+app.use(cookieParser());
 
+/*Validate User Login And Set Session If Successful*/
 app.post('/login', jsonParser, function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
+
+  var result = false;
+
+  for(var i = 0; i < allUsers.length; i++) {
+    if(allUsers[i].username === username && allUsers[i].password === password) {
+      result = true;
+      res.cookie('myvocabRemember', 'true-' + username.toString());
+    }
+  }
+
+  if(result != false) {
+    res.send(result);
+  } else {
+    res.send(result);
+  }
+});
+
+/*Check To See If User Has A Valid Session Or Not*/
+app.get('/session', function(req, res) {
+  console.log('tbd');
+});
+
+/*Populate The User's Profile Page*/
+app.post('/loadProfile', jsonParser, function(req, res) {
+  console.log(req.cookies.myvocabRemember);
+  // res.json({result: 'test'});
+  var cookie = req.cookies.myvocabRemember;
+  var stringArray = cookie.split('-', 2);
+  var username = stringArray[1];
 
   var result = false;
   var userinfo = {};
   var userdecks = [];
 
   for(var i = 0; i < allUsers.length; i++) {
-    if(allUsers[i].username === username && allUsers[i].password === password) {
+    if(allUsers[i].username === username) {
       result = true;
       userinfo = allUsers[i];
     }
@@ -41,6 +72,12 @@ app.post('/login', jsonParser, function(req, res) {
   }
 });
 
+/*Populate The Deck Dropdown List With The Names Of The User's Decks*/
+app.post('/deckDropDown', jsonParser, function(req, res) {
+  console.log('tbd');
+});
+
+/*Populate The My Decks Tab With Data For a Particular Deck*/
 app.post('/loadDeck', jsonParser, function(req, res) {
   console.log(req.body);
   var username = req.body.username;

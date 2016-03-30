@@ -143,11 +143,11 @@
                             <img class="media-object profile-picture img-thumbnail" id='user-profile-picture' src="images/test.png" alt="...">
                           </div>
                           <div class="media-body well">
-                            <label for="user-username">Username: </label><span class='span-space' id='user-username'></span><br>
-                            <label for="user-email">Email: </label><span class='span-space' id='user-email'></span><br>
-                            <label for="user-deckcount">Number of Decks: </label><span class='span-space' id='user-deckcount'></span></br>
-                            <label for="user-member-since">Member Since: </label><span class='span-space' id='user-member-since'></span><br>
-                            <label for="user-description">Background</label><br>
+                            <label class='span-space' for="user-username">Username: </label><span id='user-username'></span><br>
+                            <label class='span-space' for="user-email">Email: </label><span id='user-email'></span><br>
+                            <label class='span-space' for="user-deckcount">Number of Decks: </label><span id='user-deckcount'></span></br>
+                            <label class='span-space' for="user-member-since">Member Since: </label><span id='user-member-since'></span><br>
+                            <label class='span-space' for="user-description">Background</label><br>
                             <span id='user-description'></span>
                           </div>
                         </div>
@@ -170,11 +170,61 @@
                       </div>
                     </div>
                   </div>
-                  <div role="tabpanel" class="tab-pane" id="user-mydecks">...</div>
+                  <div role="tabpanel" class="tab-pane" id="user-mydecks">
+                    <div class='panel panel-default'>
+                      <div class='panel-body'>
+                        <div class='form-inline' id='deck-form'>
+                          <div class='form-group'>
+                            <div class="dropdown" id='deck-dropdown'>
+                              <button class="btn btn-default dropdown-toggle" type="button" id="btn-deck-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Select Deck
+                                <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu" aria-labelledby="deck-dropdown" id='deck-dropdown-items'>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class='form-group'>
+                            <input class="btn btn-default" id='btn-create-new-deck' type="button" value="New Deck">
+                          </div>
+                          <div class='form-group'>
+                            <input class="btn btn-default" id='btn-edit-deck' type="button" value="Edit Deck">
+                          </div>
+                        </div>
+                        <div class="media">
+                          <div class="media-body well">
+                            <label class='span-space' for="deck-name">Deck Name: </label><span id='deck-name'></span><br>
+                            <label class='span-space' for="deck-cardcount">Number of Cards: </label><span id='deck-cardcount'></span><br>
+                            <label class='span-space' for="deck-createdon">Created On: </label><span id='deck-createdon'></span></br>
+                            <label class='span-space' for="deck-modifiedon">Last Modified On: </label><span id='deck-modifiedon'></span><br>
+                            <label class='span-space' for="deck-description">Description</label><br>
+                            <span id='deck-description'></span>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class='table-responsive'>
+                          <table class='table table-hover' id='table-deck'>
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Word</th>
+                                <th>Pronunciation</th>
+                                <th>Meaning</th>
+                                <th>Type</th>
+                                <th>Edit</th>
+                              </tr>
+                            </thead>
+                            <tbody id='table-deck-cards'>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div role="tabpanel" class="tab-pane" id="user-mycards">...</div>
                   <div role="tabpanel" class="tab-pane" id="user-search">
                     <div class='panel panel-default'>
-                      <div call='panel-body'>
+                      <div class='panel-body'>
                       </div>
                     </div>
                   </div>
