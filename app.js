@@ -8,6 +8,7 @@ var app = express();
 /*Required Data Objects*/
 var allUsers = require('./user.js');
 var allDecks = require('./decks.js');
+// var flashCards = require('./flashcards.js');
 
 var defaultMiddleware = express.static('./public');
 app.use(defaultMiddleware);
@@ -35,6 +36,28 @@ app.post('/login', jsonParser, function(req, res) {
 
   if(result != false) {
     res.json([userinfo, userdecks]);
+  } else {
+    res.send(result);
+  }
+});
+
+app.post('/loadDeck', jsonParser, function(req, res) {
+  console.log(req.body);
+  var username = req.body.username;
+  var deckname = req.body.deckname;
+
+  var result = false;
+  var userdecks = [];
+
+  for(var i = 0; i < allDecks.length; i++) {
+    if(allDecks[i].username === username) {
+      result = true;
+      userdecks.push(allDecks[i]);
+    }
+  }
+
+  if(result != false) {
+    res.json(userdecks);
   } else {
     res.send(result);
   }

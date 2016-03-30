@@ -1,11 +1,65 @@
 'use-strict';
 
-var loginPage = document.getElementById('login-page');
-var homePage = document.getElementById('home-page');
+document.addEventListener('click', function(event) {
+  event.preventDefault();
+
+  var theTarget = event.target;
+
+  /*Target Events For The Tabs: Profile, My Decks, My Cards and Search*/
+  if(theTarget.getAttribute('data-id') === 'user-profile') {
+    $('#tab-user-profile a[href="#user-profile"]').tab('show');
+  }
+
+  if(theTarget.getAttribute('data-id') === 'user-mydecks') {
+    $('#tab-user-mydecks a[href="#user-mydecks"]').tab('show');
+  }
+
+  if(theTarget.getAttribute('data-id') === 'user-mycards') {
+    $('#tab-user-mycards a[href="#user-mycards"]').tab('show');
+  }
+
+  if(theTarget.getAttribute('data-id') === 'user-search') {
+    $('#tab-user-search a[href="#user-search"]').tab('show');
+  }
+
+
+  /*Target Event For When User Clicks On A Deck Name On The Profile Page*/
+  if(theTarget.getAttribute('data-id') === 'mydeck') {
+    var dataValue = theTarget.getAttribute('data-value');
+    $('#tab-user-mydecks a[href="#user-mydecks"]').tab('show');
+
+    var stringArray = dataValue.split('-',2);
+    var user = stringArray[0];
+    var deck = stringArray[1];
+
+    var data = {
+      username: user,
+      deckname: deck
+    }
+
+    var deckInfo = JSON.stringify(data);
+    console.log(deckInfo);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/loadDeck', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(deckInfo);
+
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+      console.log(response);
+      loadDeck(response);
+    });
+  };
+
+});
 
 var login = document.getElementById('btn-login');
 login.addEventListener('click', function(event) {
   event.preventDefault();
+
+  var loginPage = document.getElementById('login-page');
+  var homePage = document.getElementById('home-page');
 
   var theUsername = document.getElementById('login-username').value;
   var thePassword = document.getElementById('login-password').value;
@@ -31,7 +85,7 @@ login.addEventListener('click', function(event) {
 
       var p1 = new Promise(function(resolve, reject) {
         var picture = document.getElementById('user-profile-picture');
-        picture.setAttribute('src', '/images/osakaflu.jpg');
+        picture.setAttribute('src', '/images/' + response[0].profilepicture);
 
         var name = document.getElementById('user-username');
         name.textContent = response[0].username;
@@ -61,8 +115,8 @@ login.addEventListener('click', function(event) {
           var title = document.createElement('th');
           var link = document.createElement('a');
           link.setAttribute('href', '#');
-          link.setAttribute('data-id', response[0].username + '-deck-' + (i + 1));
-          link.setAttribute('data-value', response[1][i].deckname);
+          link.setAttribute('data-id', 'mydeck');
+          link.setAttribute('data-value', response[0].username + '-' + response[1][i].deckname);
           link.textContent = response[1][i].deckname;
           title.appendChild(link);
 
@@ -106,3 +160,7 @@ login.addEventListener('click', function(event) {
 
   });
 });
+
+function loadDeck(dataArray) {
+  console.log(dataArray);
+}

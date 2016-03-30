@@ -127,15 +127,15 @@
               <div class='panel-body'>
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                  <li role="presentation" class="active"><a href="#profile" aria-controls="home" role="tab" data-toggle="tab">Profile</a></li>
-                  <li role="presentation"><a href="#profile" aria-controls="mydecks" role="tab" data-toggle="tab">My Decks</a></li>
-                  <li role="presentation"><a href="#messages" aria-controls="mycards" role="tab" data-toggle="tab">My Cards</a></li>
-                  <li role="presentation"><a href="#settings" aria-controls="search" role="tab" data-toggle="tab">Search</a></li>
+                  <li role="presentation" id='tab-user-profile' data-id='user-profile' class="active"><a href="#user-profile" aria-controls="home" role="tab" data-toggle="tab">Profile</a></li>
+                  <li role="presentation" id='tab-user-mydecks' data-id='user-mydecks'><a href="#user-mydecks" aria-controls="user-mydecks" role="tab" data-toggle="tab">My Decks</a></li>
+                  <li role="presentation" id='tab-user-mycards' data-id='user-mycards'><a href="#user-mycards" aria-controls="user-mycards" role="tab" data-toggle="tab">My Cards</a></li>
+                  <li role="presentation" id='tab-user-search' data-id='user-search'><a href="#user-search" aria-controls="user-search" role="tab" data-toggle="tab">Search</a></li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                  <div role="tabpanel" class="tab-pane active" id="profile-tab">
+                  <div role="tabpanel" class="tab-pane active" id="user-profile">
                     <div class='panel panel-default'>
                       <div class='panel-body'>
                         <div class="media">
@@ -170,9 +170,14 @@
                       </div>
                     </div>
                   </div>
-                  <div role="tabpanel" class="tab-pane" id="mydecks-tab">...</div>
-                  <div role="tabpanel" class="tab-pane" id="mycards-tab">...</div>
-                  <div role="tabpanel" class="tab-pane" id="search-tab">...</div>
+                  <div role="tabpanel" class="tab-pane" id="user-mydecks">...</div>
+                  <div role="tabpanel" class="tab-pane" id="user-mycards">...</div>
+                  <div role="tabpanel" class="tab-pane" id="user-search">
+                    <div class='panel panel-default'>
+                      <div call='panel-body'>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
