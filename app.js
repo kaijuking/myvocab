@@ -92,7 +92,7 @@ app.post('/deckDropDown', jsonParser, function(req, res) {
   };
 
   if(result != false) {
-    res.json(decks);
+    res.json([username, decks]);
   } else {
     res.send(result);
   }

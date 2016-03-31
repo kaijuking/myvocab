@@ -18,8 +18,8 @@ var decks = [
     description: 'A list of JLPT N2 adjectives',
     createdon: 1459288235927,
     lastmodified: 1459288235927,
-    cards: [{id: 1, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'},
-            {id: 2, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'}]
+    cards: [{id: 1, word: '飲む', pronunciation: 'のむ', meaning: 'to drink', type: 'u-verb'},
+            {id: 2, word: '飲む', pronunciation: 'のむ', meaning: 'to drink', type: 'u-verb'}]
   },
   {
     username: 'kaijuking',
@@ -28,8 +28,8 @@ var decks = [
     description: 'A list of vocab from the Genki 1 book',
     createdon: 1459288249160,
     lastmodified: 1459288249160,
-    cards: [{id: 1, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'},
-            {id: 2, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'}]
+    cards: [{id: 1, word: '書く', pronunciation: 'かく', meaning: 'to write', type: 'u-verb'},
+            {id: 2, word: '書く', pronunciation: 'かく', meaning: 'to write', type: 'u-verb'}]
   },
   {
     username: 'kaijuking',
@@ -38,8 +38,8 @@ var decks = [
     description: 'A list of vocab from the Genki 2 book',
     createdon: 1459288258457,
     lastmodified: 1459288258457,
-    cards: [{id: 1, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'},
-            {id: 2, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'}]
+    cards: [{id: 1, word: '読む', pronunciation: 'よむ', meaning: 'to read', type: 'u-verb'},
+            {id: 2, word: '読む', pronunciation: 'よむ', meaning: 'to read', type: 'u-verb'}]
   },
   {
     username: 'kaijuking',
@@ -48,8 +48,8 @@ var decks = [
     description: 'Business Japanese vocab',
     createdon: 1459288265978,
     lastmodified: 1459288265978,
-    cards: [{id: 1, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'},
-            {id: 2, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'}]
+    cards: [{id: 1, word: '就職する', pronunciation: 'しゅうしょくする', meaning: 'to get a job, to find employment', type: 'ru-verb'},
+            {id: 2, word: '就職する', pronunciation: 'しゅうしょくする', meaning: 'to get a job, to find employment', type: 'ru-verb'}]
   },
   {
     username: 'kaijuking',
@@ -62,7 +62,8 @@ var decks = [
             {id: 2, word: '飲む', pronunciation: 'のむ', meaning: 'to drink', type: 'u-verb'},
             {id: 3, word: '書く', pronunciation: 'かく', meaning: 'to write', type: 'u-verb'},
             {id: 4, word: '読む', pronunciation: 'よむ', meaning: 'to read', type: 'u-verb'},
-            {id: 5, word: '勉強する', pronunciation: 'べんきょうする', meaning: 'to study', type: 'ru-verb'}]
+            {id: 5, word: '勉強する', pronunciation: 'べんきょうする', meaning: 'to study', type: 'ru-verb'},
+            {id: 6, word: '就職する', pronunciation: 'しゅうしょくする', meaning: 'to get a job, to find employment', type: 'ru-verb'}]
   }
 ]
 

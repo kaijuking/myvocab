@@ -29,10 +29,10 @@ document.addEventListener('click', function(event) {
         dropdown.send(user);
 
         dropdown.addEventListener('load', function() {
-          console.log(dropdown.responseText);
           var deckNames = JSON.parse(dropdown.responseText);
-          console.log(deckNames);
-          loadDropDown(deckNames);
+          var username = deckNames[0];
+          var decks = deckNames[1];
+          loadDropDown(username, decks);
         })
       }
     })
@@ -76,6 +76,29 @@ document.addEventListener('click', function(event) {
       loadDeck(deck, response);
     });
   };
+
+  if(theTarget.getAttribute('data-id') === 'dropdown-deck-title') {
+    var deckTitle = theTarget.getAttribute('data-value');
+    console.log(deckTitle);
+    //
+    // var data = {
+    //   username: user,
+    //   deckname: deck
+    // }
+    //
+    // var deckInfo = JSON.stringify(data);
+    // console.log(deckInfo);
+    //
+    // var xhr = new XMLHttpRequest();
+    // xhr.open('POST', '/loadDeck', true);
+    // xhr.setRequestHeader('Content-Type', 'application/json');
+    // xhr.send(deckInfo);
+    //
+    // xhr.addEventListener('load', function() {
+    //   var response = JSON.parse(xhr.responseText);
+    //   loadDeck(deck, response);
+    // });
+  }
 
 });
 
@@ -209,6 +232,8 @@ function loadDeck(deckname, content) {
   var dropdown = document.getElementById('deck-dropdown');
   var items = document.getElementById('deck-dropdown-items');
 
+  console.log('the username is: ' + content.username);
+
   if(items != null) {
     dropdown.removeChild(items);
     var newItems = document.createElement('ul');
@@ -222,6 +247,8 @@ function loadDeck(deckname, content) {
     var item = document.createElement('li');
     var link = document.createElement('a');
     link.setAttribute('href', '#');
+    link.setAttribute('data-id', 'mydeck');
+    link.setAttribute('data-value', content[i].username + '-' + content[i].deckname)
     link.textContent = content[i].deckname;
     item.appendChild(link);
     newItems.appendChild(item);
@@ -300,11 +327,11 @@ function loadDeck(deckname, content) {
   };
 };
 
-function loadDropDown(decknames) {
+function loadDropDown(username, decks) {
   var dropdown = document.getElementById('deck-dropdown');
   var items = document.getElementById('deck-dropdown-items');
 
-  if(decknames != null) {
+  if(decks != null) {
     dropdown.removeChild(items);
     var newItems = document.createElement('ul');
     newItems.setAttribute('class', 'dropdown-menu');
@@ -313,11 +340,13 @@ function loadDropDown(decknames) {
   }
 
   /*Populate The Dropdown Menu With Deck Names*/
-  for(var i = 0; i < decknames.length; i++) {
+  for(var i = 0; i < decks.length; i++) {
     var item = document.createElement('li');
     var link = document.createElement('a');
     link.setAttribute('href', '#');
-    link.textContent = decknames[i];
+    link.setAttribute('data-id', 'mydeck');
+    link.setAttribute('data-value', username + '-' + decks[i])
+    link.textContent = decks[i];
     item.appendChild(link);
     newItems.appendChild(item);
     dropdown.appendChild(newItems);
