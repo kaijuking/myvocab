@@ -11,7 +11,7 @@ document.addEventListener('click', function(event) {
   }
 
   if(theTarget.getAttribute('data-id') === 'user-mydecks') {
-    console.log('test');
+
     var session = new XMLHttpRequest();
     session.open('GET', '/session', true);
     session.send();
@@ -32,7 +32,11 @@ document.addEventListener('click', function(event) {
           var deckNames = JSON.parse(dropdown.responseText);
           var username = deckNames[0];
           var decks = deckNames[1];
-          loadDropDown(username, decks);
+
+          var myDropDown = 'deck-dropdown';
+          var myItems = 'deck-dropdown-items';
+
+          loadDropDown(username, decks, myDropDown, myItems);
         })
       }
     })
@@ -42,6 +46,39 @@ document.addEventListener('click', function(event) {
   }
 
   if(theTarget.getAttribute('data-id') === 'user-mycards') {
+
+    var session = new XMLHttpRequest();
+    session.open('GET', '/session', true);
+    session.send();
+
+    session.addEventListener('load', function() {
+      var username = session.responseText;
+
+      var btnReview = document.getElementById('btn-card-review');
+      btnReview.setAttribute('data-value', username);
+
+      if(username != null) {
+        var info = {username: username};
+        var user = JSON.stringify(info);
+
+        var dropdown = new XMLHttpRequest();
+        dropdown.open('POST', '/deckDropDown', true);
+        dropdown.setRequestHeader('Content-Type', 'application/json');
+        dropdown.send(user);
+
+        dropdown.addEventListener('load', function() {
+          var deckNames = JSON.parse(dropdown.responseText);
+          var username = deckNames[0];
+          var decks = deckNames[1];
+
+          var myDropDown = 'deck-mycards-dropdown';
+          var myItems = 'deck-mycards-dropdown-items';
+
+          loadDropDown(username, decks, myDropDown, myItems);
+        })
+      }
+    })
+
     $('#tab-user-mycards a[href="#user-mycards"]').tab('show');
   }
 
@@ -64,7 +101,6 @@ document.addEventListener('click', function(event) {
     }
 
     var deckInfo = JSON.stringify(data);
-    console.log(deckInfo);
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/loadDeck', true);
@@ -77,27 +113,55 @@ document.addEventListener('click', function(event) {
     });
   };
 
-  if(theTarget.getAttribute('data-id') === 'dropdown-deck-title') {
-    var deckTitle = theTarget.getAttribute('data-value');
-    console.log(deckTitle);
-    //
-    // var data = {
-    //   username: user,
-    //   deckname: deck
+  /*Target Event For When User Clicks On A Deck Name On The Profile Page*/
+  if(theTarget.getAttribute('data-id') === 'mycards') {
+    var dataValue = theTarget.getAttribute('data-value');
+
+    var stringArray = dataValue.split('-',2);
+    var user = stringArray[0];
+    var deck = stringArray[1];
+
+    var data = {
+      username: user,
+      deckname: deck
+    }
+
+    var deckInfo = JSON.stringify(data);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/loadDeck', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(deckInfo);
+
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+      console.log(response);
+      loadCards(user, deck, response);
+    });
+
+    $('#tab-user-mycards a[href="#user-mycards"]').tab('show');
+  };
+
+  if(theTarget.getAttribute('data-id') === 'btn-card-review') {
+
+    var username = document.getElementById('deck-mycards-username');
+    var deckname = document.getElementById('deck-mycards-name');
+
+    console.log(username.textContent);
+    console.log(deckname.textContent);
+
+
+    // if(dataValue === 'card-show-answer') {
+    //   console.log('show answer');
     // }
     //
-    // var deckInfo = JSON.stringify(data);
-    // console.log(deckInfo);
+    // if(dataValue === 'card-prev') {
+    //   console.log('previous card');
+    // }
     //
-    // var xhr = new XMLHttpRequest();
-    // xhr.open('POST', '/loadDeck', true);
-    // xhr.setRequestHeader('Content-Type', 'application/json');
-    // xhr.send(deckInfo);
-    //
-    // xhr.addEventListener('load', function() {
-    //   var response = JSON.parse(xhr.responseText);
-    //   loadDeck(deck, response);
-    // });
+    // if(dataValue === 'card-next') {
+    //   console.log('next card');
+    // }
   }
 
 });
@@ -327,16 +391,19 @@ function loadDeck(deckname, content) {
   };
 };
 
-function loadDropDown(username, decks) {
-  var dropdown = document.getElementById('deck-dropdown');
-  var items = document.getElementById('deck-dropdown-items');
+function loadDropDown(username, decks, myDropDown, myItems) {
 
-  if(decks != null) {
+  var dropdown = document.getElementById(myDropDown);
+  var items = document.getElementById(myItems);
+  console.log(dropdown);
+  console.log(items);
+
+  if(items != null) {
     dropdown.removeChild(items);
     var newItems = document.createElement('ul');
     newItems.setAttribute('class', 'dropdown-menu');
     newItems.setAttribute('aria-labelledby', 'deck-dropdown');
-    newItems.setAttribute('id', 'deck-dropdown-items');
+    newItems.setAttribute('id', myItems);
   }
 
   /*Populate The Dropdown Menu With Deck Names*/
@@ -344,11 +411,77 @@ function loadDropDown(username, decks) {
     var item = document.createElement('li');
     var link = document.createElement('a');
     link.setAttribute('href', '#');
-    link.setAttribute('data-id', 'mydeck');
-    link.setAttribute('data-value', username + '-' + decks[i])
-    link.textContent = decks[i];
-    item.appendChild(link);
-    newItems.appendChild(item);
-    dropdown.appendChild(newItems);
+    if(myItems === 'deck-dropdown-items') {
+      link.setAttribute('data-id', 'mydeck');
+      link.setAttribute('data-value', username + '-' + decks[i]);
+      link.textContent = decks[i];
+      item.appendChild(link);
+      newItems.appendChild(item);
+      dropdown.appendChild(newItems);
+    }
+    if(myItems === 'deck-mycards-dropdown-items') {
+      link.setAttribute('data-id', 'mycards');
+      link.setAttribute('data-value', username + '-' + decks[i]);
+      link.textContent = decks[i];
+      item.appendChild(link);
+      newItems.appendChild(item);
+      dropdown.appendChild(newItems);
+    }
   }
 }
+
+function loadCards(user, deckname, content) {
+  console.log(user);
+  console.log(deckname);
+  console.log(content);
+
+  var username = document.getElementById('deck-mycards-username');
+  username.textContent = user;
+
+  /*Populate The Onscreen Deck Info*/
+  for(var i = 0; i < content.length; i++) {
+    if(content[i].deckname === deckname) {
+      var name = document.getElementById('deck-mycards-name');
+      name.textContent = content[i].deckname;
+
+      var panelHeader = document.getElementById('panel-heading-review-card');
+      panelHeader.textContent = content[i].deckname;
+
+      var cardcount = document.getElementById('deck-mycards-cardcount');
+      cardcount.textContent = content[i].numcards;
+
+      var createDate = new Date(content[i].createdon);
+      var created = document.getElementById('deck-mycards-createdon');
+      created.textContent = createDate.getMonth() + '/' + createDate.getUTCDate() + '/' + createDate.getFullYear();
+
+      var modifyDate = new Date(content[i].lastmodified);
+      var modified = document.getElementById('deck-mycards-modifiedon');
+      modified.textContent = modifyDate.getMonth() + '/' + modifyDate.getUTCDate() + '/' + modifyDate.getFullYear();
+
+      var description = document.getElementById('deck-mycards-description');
+      description.textContent = content[i].description;
+    }
+  }
+}
+
+var Cards = function(username, deckname, content) {
+  this.username = username;
+  this.deck = deckname;
+  this.cards = content;
+}
+
+function getDeck() {
+  return this.deck;
+}
+
+function getCards() {
+  return this.cards;
+}
+
+function getUsername() {
+  return this.username;
+}
+
+Cards.prototype.getDeck = getDeck;
+Cards.prototype.getCards = getCards;
+Cards.prototype.getUsername = getUsername;

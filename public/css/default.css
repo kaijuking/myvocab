@@ -38,6 +38,18 @@
   margin-right: 10px;
 }
 
+#panel-body-review-card, #panel-heading-review-card {
+  text-align: center;
+}
+
+#panel-footer-review-card {
+  /*TBD*/
+}
+
+#panel-body-review-card {
+  height: 200px;
+}
+
 /*Onle Used For Testing. Will Remove Once Project Is Complete.*/
 .border {
   border: 1px solid red;

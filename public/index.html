@@ -193,6 +193,7 @@
                         </div>
                         <div class="media">
                           <div class="media-body well">
+                            <label class='span-space' for="deck-name">Username: </label><span id='deck-username'></span><br>
                             <label class='span-space' for="deck-name">Deck Name: </label><span id='deck-name'></span><br>
                             <label class='span-space' for="deck-cardcount">Number of Cards: </label><span id='deck-cardcount'></span><br>
                             <label class='span-space' for="deck-createdon">Created On: </label><span id='deck-createdon'></span></br>
@@ -221,7 +222,55 @@
                       </div>
                     </div>
                   </div>
-                  <div role="tabpanel" class="tab-pane" id="user-mycards">...</div>
+                  <div role="tabpanel" class="tab-pane" id="user-mycards">
+
+                    <div class='panel panel-default'>
+                      <div class='panel-body'>
+                        <div class='form-inline' id='mycards-form'>
+                          <div class='form-group'>
+                            <div class="dropdown" id='deck-mycards-dropdown'>
+                              <button class="btn btn-default dropdown-toggle" type="button" id="btn-deck-mycards-dropdown" data-id='btn-deck-mycards-dropdown' data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Select Deck
+                                <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu" aria-labelledby="deck-dropdown" id='deck-mycards-dropdown-items' data-id='deck-mycards-dropdown-items'>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class='form-group'>
+                            <input class="btn btn-default" id='btn-card-review' data-id='btn-card-review' type="button" value="Review">
+                          </div>
+                        </div>
+                        <div class="media">
+                          <div class="media-body well">
+                            <label class='span-space' for="deck-name">Username: </label><span id='deck-mycards-username'></span><br>
+                            <label class='span-space' for="deck-name">Deck Name: </label><span id='deck-mycards-name'></span><br>
+                            <label class='span-space' for="deck-cardcount">Number of Cards: </label><span id='deck-mycards-cardcount'></span><br>
+                            <label class='span-space' for="deck-createdon">Created On: </label><span id='deck-mycards-createdon'></span></br>
+                            <label class='span-space' for="deck-modifiedon">Last Modified On: </label><span id='deck-mycards-modifiedon'></span><br>
+                            <label class='span-space' for="deck-description">Description</label><br>
+                            <span id='deck-mycards-description'></span>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="panel panel-primary">
+                          <div class="panel-heading" id='panel-heading-review-card'>Deck Title</div>
+                          <div class="panel-body" id='panel-body-review-card'>
+                            Select A Deck To Being Reviewing Your Cards
+                          </div>
+                          <div class="panel-footer" id='panel-footer-review-card'>
+                            <div class="btn-group" role="group" aria-label="...">
+                              <button type="button" class="btn btn-default" data-id='btn-show-prev-next' data-value='card-show-answer'><span class="glyphicon glyphicon-book" aria-hidden="true"></span></button>
+                              <button type="button" class="btn btn-default" data-id='btn-show-prev-next' data-value='card-prev'><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></button>
+                              <button type="button" class="btn btn-default" data-id='btn-show-prev-next' data-value='card-next'><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
                   <div role="tabpanel" class="tab-pane" id="user-search">
                     <div class='panel panel-default'>
                       <div class='panel-body'>

@@ -54,7 +54,7 @@ var decks = [
   {
     username: 'kaijuking',
     deckname: 'Verbs',
-    numcards: 5,
+    numcards: 6,
     description: 'Common Verbs',
     createdon: 1459288265978,
     lastmodified: 1459288265978,
