@@ -243,6 +243,34 @@ document.addEventListener('click', function(event) {
       }
     }
   }
+
+  if(theTarget.getAttribute('data-id') === 'deck-card-edit') {
+    var dataValue = theTarget.getAttribute('data-value');
+    console.log(dataValue);
+
+    var deck = document.getElementById('table-deck');
+    console.log(deck);
+    var children = deck.childNodes;
+    console.log(children);
+    var count = children[4].childElementCount;
+    console.log(count);
+    var node = children[4].childNodes[0];
+    console.log(node);
+
+    console.log(node.childNodes);
+    // node.childNodes[1].textContent = 'test';
+
+    console.log('----');
+
+    console.log(deck.childNodes[4].childElementCount);
+    var length = deck.childNodes[4].childElementCount;
+    console.log(deck.childNodes[4].rows[0]);
+    console.log(deck.childNodes[4].rows[1]);
+    // for(var i = 0; i < length; i++) {
+    //   console.log(deck.childNodes[i].textContent);
+    // }
+  }
+
 });
 
 var login = document.getElementById('btn-login');
@@ -307,7 +335,7 @@ function loadProfile(info) {
 
       var myDate = new Date(info[0].createdon);
       var membersince = document.getElementById('user-member-since');
-      membersince.textContent = myDate.getMonth() + '/' + myDate.getUTCDate() + '/' + myDate.getFullYear();
+      membersince.textContent = (myDate.getMonth() + 1) + '/' + myDate.getUTCDate() + '/' + myDate.getFullYear();
 
       var description = document.getElementById('user-description');
       description.textContent = info[0].description;
@@ -411,7 +439,7 @@ function loadDeck(deckname, content) {
 
       var modifyDate = new Date(content[i].lastmodified);
       var modified = document.getElementById('deck-modifiedon');
-      modified.textContent = modifyDate.getMonth() + '/' + modifyDate.getUTCDate() + '/' + modifyDate.getFullYear();
+      modified.textContent = (modifyDate.getMonth() + 1) + '/' + modifyDate.getUTCDate() + '/' + modifyDate.getFullYear();
 
       var description = document.getElementById('deck-description');
       description.textContent = content[i].description;
@@ -432,18 +460,28 @@ function loadDeck(deckname, content) {
     if(content[i].deckname === deckname) {
       for(var n = 0; n < content[i].cards.length; n++) {
         var cardNum = document.createElement('th');
+        cardNum.setAttribute('data-id', 'id');
+        cardNum.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         cardNum.textContent = content[i].cards[n].id;
 
         var theWord = document.createElement('th');
+        theWord.setAttribute('data-id', 'word');
+        theWord.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         theWord.textContent = content[i].cards[n].word;
 
         var thePronunciation = document.createElement('th');
+        thePronunciation.setAttribute('data-id', 'pronunciation');
+        thePronunciation.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         thePronunciation.textContent = content[i].cards[n].pronunciation;
 
         var theMeaning = document.createElement('th');
+        theMeaning.setAttribute('data-id', 'meaning');
+        theMeaning.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         theMeaning.textContent = content[i].cards[n].meaning;
 
         var theType = document.createElement('th');
+        theType.setAttribute('data-id', 'type');
+        theType.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         theType.textContent = content[i].cards[n].type;
 
         var link = document.createElement('a');
@@ -527,7 +565,7 @@ function loadCards(user, deckname, content) {
 
       var modifyDate = new Date(content[i].lastmodified);
       var modified = document.getElementById('deck-mycards-modifiedon');
-      modified.textContent = modifyDate.getMonth() + '/' + modifyDate.getUTCDate() + '/' + modifyDate.getFullYear();
+      modified.textContent = (modifyDate.getMonth() + 1) + '/' + modifyDate.getUTCDate() + '/' + modifyDate.getFullYear();
 
       var description = document.getElementById('deck-mycards-description');
       description.textContent = content[i].description;
