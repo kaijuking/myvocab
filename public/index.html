@@ -229,7 +229,7 @@
                         <div class='form-inline' id='mycards-form'>
                           <div class='form-group'>
                             <div class="dropdown" id='deck-mycards-dropdown'>
-                              <button class="btn btn-default dropdown-toggle" type="button" id="btn-deck-mycards-dropdown" data-id='btn-deck-mycards-dropdown' data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                              <button class="btn btn-default dropdown-toggle" type="button" id="btn-deck-mycards-dropdown" data-id='btn-deck-mycards-dropdown' data-value='btn-deck-mycards-dropdown' data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 Select Deck
                                 <span class="caret"></span>
                               </button>
@@ -256,13 +256,13 @@
                         <div class="panel panel-primary">
                           <div class="panel-heading" id='panel-heading-review-card'>Deck Title</div>
                           <div class="panel-body" id='panel-body-review-card'>
-                            Select A Deck To Being Reviewing Your Cards
+                            <span class='show' id='review-card-span'>Select A Deck And Click Review To Begin Reviewing Your Cards! ^_^</span>
                           </div>
                           <div class="panel-footer" id='panel-footer-review-card'>
                             <div class="btn-group" role="group" aria-label="...">
-                              <button type="button" class="btn btn-default" data-id='btn-show-prev-next' data-value='card-show-answer'><span class="glyphicon glyphicon-book" aria-hidden="true"></span></button>
-                              <button type="button" class="btn btn-default" data-id='btn-show-prev-next' data-value='card-prev'><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></button>
-                              <button type="button" class="btn btn-default" data-id='btn-show-prev-next' data-value='card-next'><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+                              <button type="button" class="btn btn-default glyphicon glyphicon-book" id='btn-show-answer' data-id='btn-show-prev-next' data-value='card-show-answer-false'></button>
+                              <button type="button" class="btn btn-default glyphicon glyphicon-backward" data-id='btn-show-prev-next' data-value='card-prev'></button>
+                              <button type="button" class="btn btn-default glyphicon glyphicon-forward" data-id='btn-show-prev-next' data-value='card-next'></button>
                             </div>
                           </div>
                         </div>

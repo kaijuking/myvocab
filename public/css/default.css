@@ -38,16 +38,19 @@
   margin-right: 10px;
 }
 
-#panel-body-review-card, #panel-heading-review-card {
+#panel-heading-review-card, #panel-body-review-card {
   text-align: center;
 }
 
-#panel-footer-review-card {
-  /*TBD*/
+#panel-body-review-card {
+  align-content: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  font-size: 50px;
 }
 
-#panel-body-review-card {
-  height: 200px;
+#review-card-span {
+  font-size: 15px;
 }
 
 /*Onle Used For Testing. Will Remove Once Project Is Complete.*/

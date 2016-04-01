@@ -1,5 +1,9 @@
 'use-strict';
 
+var reviewCards;
+var startIndex = 0;
+var currentIndex = 0;
+
 document.addEventListener('click', function(event) {
   event.preventDefault();
 
@@ -120,6 +124,8 @@ document.addEventListener('click', function(event) {
     var stringArray = dataValue.split('-',2);
     var user = stringArray[0];
     var deck = stringArray[1];
+    startIndex = 0;
+    currentIndex = 0;
 
     var data = {
       username: user,
@@ -144,26 +150,99 @@ document.addEventListener('click', function(event) {
 
   if(theTarget.getAttribute('data-id') === 'btn-card-review') {
 
+    startIndex = 0;
+    currentIndex = 0;
+
     var username = document.getElementById('deck-mycards-username');
     var deckname = document.getElementById('deck-mycards-name');
 
-    console.log(username.textContent);
-    console.log(deckname.textContent);
+    var data = {
+      username: username.textContent,
+      deckname: deckname.textContent
+    }
 
+    var deckInfo = JSON.stringify(data);
 
-    // if(dataValue === 'card-show-answer') {
-    //   console.log('show answer');
-    // }
-    //
-    // if(dataValue === 'card-prev') {
-    //   console.log('previous card');
-    // }
-    //
-    // if(dataValue === 'card-next') {
-    //   console.log('next card');
-    // }
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/singleDeck', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(deckInfo);
+
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+
+      reviewCards = response;
+
+      var panelBody = document.getElementById('panel-body-review-card');
+      panelBody.textContent = response[0].cards[0].word;
+    });
   }
 
+  if(theTarget.getAttribute('data-id') === 'btn-show-prev-next') {
+    var dataValue = theTarget.getAttribute('data-value');
+    var lastIndex = reviewCards[0].cards.length - 1;
+    var panelHeader = document.getElementById('panel-heading-review-card');
+
+    if(dataValue === 'card-show-answer-false') {
+      var panelBody = document.getElementById('panel-body-review-card');
+      panelBody.textContent = reviewCards[0].cards[currentIndex].pronunciation + ' - ' + reviewCards[0].cards[currentIndex].meaning;
+
+      var btnAnswer = document.getElementById('btn-show-answer');
+      btnAnswer.setAttribute('data-value', 'card-show-answer-true')
+    }
+
+    if(dataValue === 'card-show-answer-true') {
+      var panelBody = document.getElementById('panel-body-review-card');
+      panelBody.textContent = reviewCards[0].cards[currentIndex].word;
+
+      var btnAnswer = document.getElementById('btn-show-answer');
+      btnAnswer.setAttribute('data-value', 'card-show-answer-false')
+    }
+
+    if(dataValue === 'card-prev') {
+      currentIndex--;
+      if(currentIndex > -1) {
+        var panelBody = document.getElementById('panel-body-review-card');
+        panelBody.textContent = reviewCards[0].cards[currentIndex].word;
+
+        var btnAnswer = document.getElementById('btn-show-answer');
+        btnAnswer.setAttribute('data-value', 'card-show-answer-false')
+
+        panelHeader.textContent = reviewCards[0].deckname + ' (' + (currentIndex + 1) + ' of ' + (lastIndex + 1) + ')';
+      } else {
+        currentIndex = lastIndex;
+        var panelBody = document.getElementById('panel-body-review-card');
+        panelBody.textContent = reviewCards[0].cards[currentIndex].word;
+
+        var btnAnswer = document.getElementById('btn-show-answer');
+        btnAnswer.setAttribute('data-value', 'card-show-answer-false')
+
+        panelHeader.textContent = reviewCards[0].deckname + ' (' + (currentIndex + 1) + ' of ' + (lastIndex + 1) + ')';
+      }
+    }
+
+    if(dataValue === 'card-next') {
+      if(currentIndex === lastIndex) {
+        currentIndex = 0;
+        var panelBody = document.getElementById('panel-body-review-card');
+        panelBody.textContent = reviewCards[0].cards[currentIndex].word;
+
+        var btnAnswer = document.getElementById('btn-show-answer');
+        btnAnswer.setAttribute('data-value', 'card-show-answer-false')
+
+        panelHeader.textContent = reviewCards[0].deckname + ' (' + (currentIndex + 1) + ' of ' + (lastIndex + 1) + ')';
+      } else {
+        currentIndex++;
+        var panelBody = document.getElementById('panel-body-review-card');
+        panelBody.textContent = reviewCards[0].cards[currentIndex].word;
+
+        var btnAnswer = document.getElementById('btn-show-answer');
+        btnAnswer.setAttribute('data-value', 'card-show-answer-false')
+
+        panelHeader.textContent = reviewCards[0].deckname + ' (' + (currentIndex + 1) + ' of ' + (lastIndex + 1) + ')';
+      }
+    }
+  }
 });
 
 var login = document.getElementById('btn-login');
@@ -188,7 +267,6 @@ login.addEventListener('click', function(event) {
 
   tryLogin.addEventListener('load', function() {
     var response = JSON.parse(tryLogin.responseText);
-    console.log(response);
     loginResponse = response;
 
     if(loginResponse === true) {
@@ -202,8 +280,6 @@ login.addEventListener('click', function(event) {
 
       profile.addEventListener('load', function() {
         var info = JSON.parse(profile.responseText);
-        console.log(info);
-
         loadProfile(info);
       });
     };
@@ -261,7 +337,7 @@ function loadProfile(info) {
 
         var myDate = new Date(info[1][i].createdon);
         var created = document.createElement('th');
-        created.textContent = myDate.getMonth() + '/' + myDate.getUTCDate() + '/' + myDate.getFullYear();
+        created.textContent = (myDate.getMonth() + 1) + '/' + myDate.getUTCDate() + '/' + myDate.getFullYear();
 
         var row = document.createElement('tr');
         row.appendChild(id);
@@ -296,8 +372,6 @@ function loadDeck(deckname, content) {
   var dropdown = document.getElementById('deck-dropdown');
   var items = document.getElementById('deck-dropdown-items');
 
-  console.log('the username is: ' + content.username);
-
   if(items != null) {
     dropdown.removeChild(items);
     var newItems = document.createElement('ul');
@@ -322,6 +396,9 @@ function loadDeck(deckname, content) {
   /*Populate The Onscreen Deck Info*/
   for(var i = 0; i < content.length; i++) {
     if(content[i].deckname === deckname) {
+      var user = document.getElementById('deck-username');
+      user.textContent = content[i].username;
+
       var name = document.getElementById('deck-name');
       name.textContent = content[i].deckname;
 
@@ -330,7 +407,7 @@ function loadDeck(deckname, content) {
 
       var createDate = new Date(content[i].createdon);
       var created = document.getElementById('deck-createdon');
-      created.textContent = createDate.getMonth() + '/' + createDate.getUTCDate() + '/' + createDate.getFullYear();
+      created.textContent = (createDate.getMonth() + 1) + '/' + createDate.getUTCDate() + '/' + createDate.getFullYear();
 
       var modifyDate = new Date(content[i].lastmodified);
       var modified = document.getElementById('deck-modifiedon');
@@ -395,8 +472,6 @@ function loadDropDown(username, decks, myDropDown, myItems) {
 
   var dropdown = document.getElementById(myDropDown);
   var items = document.getElementById(myItems);
-  console.log(dropdown);
-  console.log(items);
 
   if(items != null) {
     dropdown.removeChild(items);
@@ -431,10 +506,6 @@ function loadDropDown(username, decks, myDropDown, myItems) {
 }
 
 function loadCards(user, deckname, content) {
-  console.log(user);
-  console.log(deckname);
-  console.log(content);
-
   var username = document.getElementById('deck-mycards-username');
   username.textContent = user;
 
@@ -445,14 +516,14 @@ function loadCards(user, deckname, content) {
       name.textContent = content[i].deckname;
 
       var panelHeader = document.getElementById('panel-heading-review-card');
-      panelHeader.textContent = content[i].deckname;
+      panelHeader.textContent = content[i].deckname + ' (' + (currentIndex + 1) + ' of ' + content[i].cards.length + ')';
 
       var cardcount = document.getElementById('deck-mycards-cardcount');
       cardcount.textContent = content[i].numcards;
 
       var createDate = new Date(content[i].createdon);
       var created = document.getElementById('deck-mycards-createdon');
-      created.textContent = createDate.getMonth() + '/' + createDate.getUTCDate() + '/' + createDate.getFullYear();
+      created.textContent = (createDate.getMonth() + 1) + '/' + createDate.getUTCDate() + '/' + createDate.getFullYear();
 
       var modifyDate = new Date(content[i].lastmodified);
       var modified = document.getElementById('deck-mycards-modifiedon');
@@ -463,25 +534,3 @@ function loadCards(user, deckname, content) {
     }
   }
 }
-
-var Cards = function(username, deckname, content) {
-  this.username = username;
-  this.deck = deckname;
-  this.cards = content;
-}
-
-function getDeck() {
-  return this.deck;
-}
-
-function getCards() {
-  return this.cards;
-}
-
-function getUsername() {
-  return this.username;
-}
-
-Cards.prototype.getDeck = getDeck;
-Cards.prototype.getCards = getCards;
-Cards.prototype.getUsername = getUsername;

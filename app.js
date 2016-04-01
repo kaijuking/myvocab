@@ -121,6 +121,28 @@ app.post('/loadDeck', jsonParser, function(req, res) {
   }
 });
 
+app.post('/singleDeck', jsonParser, function(req, res) {
+  console.log(req.body);
+  var username = req.body.username;
+  var deckname = req.body.deckname;
+
+  var result = false;
+  var userdeck = [];
+
+  for(var i = 0; i < allDecks.length; i++) {
+    if(allDecks[i].username === username && allDecks[i].deckname === deckname) {
+      result = true;
+      userdeck.push(allDecks[i]);
+    }
+  }
+
+  if(result != false) {
+    res.json(userdeck);
+  } else {
+    res.send(result);
+  }
+});
+
 app.listen(8080, function() {
   console.log('Project #2: MyVocab');
 });
