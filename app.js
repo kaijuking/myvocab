@@ -176,11 +176,36 @@ app.post('/editDeck', jsonParser, function(req, res) {
   console.log(req.body);
 
   var username = req.body.username;
-  var deckname = req.body.deckname;
+  var deckId = req.body.deckId;
+  var originalDeckname = req.body.originalDeckname;
+  var newDeckname = req.body.newDeckname;
+  var source = req.body.source;
+  var publisher = req.body.publisher;
+  var isbn = req.body.isbn;
+  var description = req.body.description;
 
   var result = false;
+  var lastModified;
 
+  for(var i = 0; i < allDecks.length; i++) {
+    if(allDecks[i].username === username && allDecks[i].id === deckId) {
+      allDecks[i].deckname = newDeckname;
+      allDecks[i].source = source;
+      allDecks[i].publisher = publisher;
+      allDecks[i].isbn = isbn;
+      allDecks[i].description = description;
+      var now = Date.now();
+      allDecks[i].lastmodified = now;
+      lastModified = allDecks[i].lastmodified;
+      result = true;
+    }
+  }
 
+  if(result != false) {
+    res.json(lastModified);
+  } else {
+    res.json(result);
+  }
 
 });
 

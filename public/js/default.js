@@ -335,6 +335,106 @@ document.addEventListener('click', function(event) {
     });
   }
 
+  if(theTarget.getAttribute('data-id') === 'btn-edit-deck') {
+    var dataValue = theTarget.getAttribute('data-value');
+
+    var deckName = document.getElementById('deck-name');
+    if(deckName.textContent === ''){
+      console.log('no deck name selected.');
+    } else {
+
+      var theUsername = document.getElementById('deck-username').textContent;
+      var theDeckname = document.getElementById('deck-name').textContent;
+      var theSource = document.getElementById('deck-source').textContent;
+      var thePublisher = document.getElementById('deck-publisher').textContent;
+      var theISBN = document.getElementById('deck-isbn').textContent;
+      var theDescription = document.getElementById('deck-description').textContent;
+
+      var username = document.getElementById('modal-edit-deck-username');
+      username.textContent = theUsername;
+
+      var deckname = document.getElementById('modal-edit-deck-deckname');
+      deckname.value = theDeckname;
+
+      var source = document.getElementById('modal-edit-deck-source');
+      source.value = theSource;
+
+      var publisher = document.getElementById('modal-edit-deck-publisher');
+      publisher.value = thePublisher;
+
+      var isbn = document.getElementById('modal-edit-deck-isbn');
+      isbn.value = theISBN;
+
+      var description = document.getElementById('modal-edit-deck-description');
+      description.value = theDescription;
+
+      $('#myModal-edit-deck').modal('show');
+    }
+  }
+
+  if(theTarget.getAttribute('data-id') === 'modal-edit-deck-btn-save') {
+
+    var deck = document.getElementById('deck-name');
+    var dataValue = deck.getAttribute('data-value');
+    var stringArray = dataValue.split('-', 3);
+    var username = stringArray[0];
+    var originalDeckname = stringArray[1];
+    var deckId = stringArray[2];
+
+    var newDeckname = document.getElementById('modal-edit-deck-deckname').value;
+    var source = document.getElementById('modal-edit-deck-source').value;
+    var publisher = document.getElementById('modal-edit-deck-publisher').value;
+    var isbn = document.getElementById('modal-edit-deck-isbn').value;
+    var description = document.getElementById('modal-edit-deck-description').value;
+
+    var data = {
+      username: username,
+      deckId: deckId,
+      originalDeckname: originalDeckname,
+      newDeckname: newDeckname,
+      source: source,
+      publisher: publisher,
+      isbn: isbn,
+      description: description
+    }
+
+    var deckInfo = JSON.stringify(data);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/editDeck', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(deckInfo);
+
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+
+      if(response != false) {
+        console.log(response);
+
+        var modifiedDate = new Date(response);
+        var modified = document.getElementById('deck-modifiedon');
+        modified.textContent = (modifiedDate.getMonth() + 1) + '/' + modifiedDate.getUTCDate() + '/' + modifiedDate.getFullYear();
+
+        var theDeckname = document.getElementById('deck-name');
+        theDeckname.textContent = newDeckname;
+
+        var theSource = document.getElementById('deck-source');
+        theSource.textContent = source;
+
+        var thePublisher = document.getElementById('deck-publisher');
+        thePublisher.textContent = publisher;
+
+        var theISBN = document.getElementById('deck-isbn');
+        theISBN.textContent = isbn;
+
+        var theDescription = document.getElementById('deck-description');
+        theDescription.textContent = description;
+        $('#myModal-edit-deck').modal('hide');
+      }
+
+    });
+  }
+
 });
 
 var login = document.getElementById('btn-login');
@@ -495,6 +595,7 @@ function loadDeck(deckname, content) {
       user.textContent = content[i].username;
 
       var name = document.getElementById('deck-name');
+      name.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].id)
       name.textContent = content[i].deckname;
 
       var cardcount = document.getElementById('deck-cardcount');
