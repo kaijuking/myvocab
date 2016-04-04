@@ -48,8 +48,6 @@ app.get('/session', function(req, res) {
 
 /*Populate The User's Profile Page*/
 app.post('/loadProfile', jsonParser, function(req, res) {
-  console.log(req.cookies.myvocabRemember);
-  // res.json({result: 'test'});
   var cookie = req.cookies.myvocabRemember;
   var stringArray = cookie.split('-', 2);
   var username = stringArray[1];
@@ -100,7 +98,6 @@ app.post('/deckDropDown', jsonParser, function(req, res) {
 
 /*Populate The My Decks Tab With Data For a Particular Deck*/
 app.post('/loadDeck', jsonParser, function(req, res) {
-  console.log(req.body);
   var username = req.body.username;
   var deckname = req.body.deckname;
 
@@ -122,7 +119,6 @@ app.post('/loadDeck', jsonParser, function(req, res) {
 });
 
 app.post('/singleDeck', jsonParser, function(req, res) {
-  console.log(req.body);
   var username = req.body.username;
   var deckname = req.body.deckname;
 
@@ -141,6 +137,50 @@ app.post('/singleDeck', jsonParser, function(req, res) {
   } else {
     res.send(result);
   }
+});
+
+app.post('/editCard', jsonParser, function(req, res) {
+  var username = req.body.username;
+  var deckname = req.body.deckname;
+  var cardId = req.body.card;
+  var word = req.body.word;
+  var pronunciation = req.body.pronunciation;
+  var meaning = req.body.meaning;
+  var type = req.body.type;
+
+  var result = false;
+  var newcard = [];
+
+  for(var i = 0; i < allDecks.length; i++) {
+    if(allDecks[i].username === username && allDecks[i].deckname === deckname) {
+      if(allDecks[i].cards.id === cardId) {
+        result = true;
+        allDecks[i].cards.word = word;
+        allDecks[i].cards.pronunciation = pronunciation;
+        allDecks[i].meaning = meaning;
+        allDecks[i].type = type;
+      }
+    }
+  }
+
+  if(result != false) {
+    res.send('woohoo');
+  } else {
+    res.send('booo');
+  }
+
+});
+
+app.post('/editDeck', jsonParser, function(req, res) {
+  console.log(req.body);
+
+  var username = req.body.username;
+  var deckname = req.body.deckname;
+
+  var result = false;
+
+
+
 });
 
 app.listen(8080, function() {

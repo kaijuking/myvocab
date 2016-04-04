@@ -246,31 +246,80 @@ document.addEventListener('click', function(event) {
 
   if(theTarget.getAttribute('data-id') === 'deck-card-edit') {
     var dataValue = theTarget.getAttribute('data-value');
-    console.log(dataValue);
+    var stringArray = dataValue.split('-',3);
+    console.log(stringArray);
+
+    var theUsername = stringArray[0];
+    var theDeckname = stringArray[1];
+    var cardId = stringArray[2];
 
     var deck = document.getElementById('table-deck');
-    console.log(deck);
     var children = deck.childNodes;
-    console.log(children);
-    var count = children[4].childElementCount;
-    console.log(count);
-    var node = children[4].childNodes[0];
-    console.log(node);
+    //children[4].childNodes[0] === table row 0 (i.e. card #1)
+    //children[4].childNodes[0].childNodes[1] === tabe row 0, column #2 (i.e. Word)
+    console.log(children[4].childNodes[0].childNodes[1].textContent);
+    console.log(children[4].childNodes[0].childNodes[1].getAttribute('data-id'));
 
-    console.log(node.childNodes);
-    // node.childNodes[1].textContent = 'test';
+    // console.log(children[4].childNodes[0].childNodes[1].textContent);
+    // children[4].childNodes[0].childNodes[1].textContent = 'test';
+    // console.log(children[4].childNodes[0].childNodes[1].textContent);
 
-    console.log('----');
+    var childIndex = cardId - 1;
 
-    console.log(deck.childNodes[4].childElementCount);
-    var length = deck.childNodes[4].childElementCount;
-    console.log(deck.childNodes[4].rows[0]);
-    console.log(deck.childNodes[4].rows[1]);
-    // for(var i = 0; i < length; i++) {
-    //   console.log(deck.childNodes[i].textContent);
-    // }
+    var deck = document.getElementById('modal-deckname-card');
+    deck.textContent = theDeckname;
+
+    var id = document.getElementById('modal-card-id');
+    id.textContent = cardId;
+
+    var word = document.getElementById('modal-card-word');
+    word.value = children[4].childNodes[childIndex].childNodes[1].textContent;
+
+    var pronunciation = document.getElementById('modal-card-pronunciation');
+    pronunciation.value = children[4].childNodes[childIndex].childNodes[2].textContent;
+
+    var meaning = document.getElementById('modal-card-meaning');
+    meaning.value = children[4].childNodes[childIndex].childNodes[3].textContent;
+
+    var type = document.getElementById('modal-card-type');
+    type.value = children[4].childNodes[childIndex].childNodes[4].textContent;
+
+    $('#myModal').modal('show');
+
   }
 
+  if(theTarget.getAttribute('data-id') === 'modal-edit-card-btn-save') {
+    var dataValue = theTarget.getAttribute('data-value');
+
+    var deck = document.getElementById('modal-deckname-card');
+    deck.textContent = theDeckname;
+
+    var id = document.getElementById('modal-card-id');
+    id.textContent = cardId;
+
+    var word = document.getElementById('modal-card-word');
+    word.value = children[4].childNodes[childIndex].childNodes[1].textContent;
+
+    var pronunciation = document.getElementById('modal-card-pronunciation');
+    pronunciation.value = children[4].childNodes[childIndex].childNodes[2].textContent;
+
+    var meaning = document.getElementById('modal-card-meaning');
+    meaning.value = children[4].childNodes[childIndex].childNodes[3].textContent;
+
+    var type = document.getElementById('modal-card-type');
+    type.value = children[4].childNodes[childIndex].childNodes[4].textContent;
+
+    var data = {
+      username: theUsername,
+      deckname: theDeckname,
+      card: cardId,
+      word: word.value,
+      pronunciation: pronunciation.value,
+      meaning: meaning.value,
+      type: type.value
+    }
+    console.log(data);
+  }
 });
 
 var login = document.getElementById('btn-login');
@@ -424,6 +473,9 @@ function loadDeck(deckname, content) {
   /*Populate The Onscreen Deck Info*/
   for(var i = 0; i < content.length; i++) {
     if(content[i].deckname === deckname) {
+      var image = document.getElementById('deck-source-image');
+      image.setAttribute('src', '/images/' + content[i].sourceimage);
+
       var user = document.getElementById('deck-username');
       user.textContent = content[i].username;
 
@@ -432,6 +484,15 @@ function loadDeck(deckname, content) {
 
       var cardcount = document.getElementById('deck-cardcount');
       cardcount.textContent = content[i].numcards;
+
+      var source = document.getElementById('deck-source');
+      source.textContent = content[i].source;
+
+      var publisher = document.getElementById('deck-publisher');
+      publisher.textContent = content[i].publisher;
+
+      var isbn = document.getElementById('deck-isbn');
+      isbn.textContent = content[i].isbn;
 
       var createDate = new Date(content[i].createdon);
       var created = document.getElementById('deck-createdon');
@@ -550,6 +611,10 @@ function loadCards(user, deckname, content) {
   /*Populate The Onscreen Deck Info*/
   for(var i = 0; i < content.length; i++) {
     if(content[i].deckname === deckname) {
+
+      var image = document.getElementById('deck-mycards-source-image');
+      image.setAttribute('src', '/images/' + content[i].sourceimage);
+
       var name = document.getElementById('deck-mycards-name');
       name.textContent = content[i].deckname;
 
@@ -558,6 +623,15 @@ function loadCards(user, deckname, content) {
 
       var cardcount = document.getElementById('deck-mycards-cardcount');
       cardcount.textContent = content[i].numcards;
+
+      var source = document.getElementById('deck-mycards-source');
+      source.textContent = content[i].source;
+
+      var publisher = document.getElementById('deck-mycards-publisher');
+      publisher.textContent = content[i].publisher;
+
+      var isbn = document.getElementById('deck-mycards-isbn');
+      isbn.textContent = content[i].isbn;
 
       var createDate = new Date(content[i].createdon);
       var created = document.getElementById('deck-mycards-createdon');
