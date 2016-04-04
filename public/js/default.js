@@ -255,19 +255,13 @@ document.addEventListener('click', function(event) {
 
     var deck = document.getElementById('table-deck');
     var children = deck.childNodes;
-    //children[4].childNodes[0] === table row 0 (i.e. card #1)
-    //children[4].childNodes[0].childNodes[1] === tabe row 0, column #2 (i.e. Word)
-    console.log(children[4].childNodes[0].childNodes[1].textContent);
-    console.log(children[4].childNodes[0].childNodes[1].getAttribute('data-id'));
+    var childIndex = cardId -1 ;
 
-    // console.log(children[4].childNodes[0].childNodes[1].textContent);
-    // children[4].childNodes[0].childNodes[1].textContent = 'test';
-    // console.log(children[4].childNodes[0].childNodes[1].textContent);
+    var userName = document.getElementById('modal-username-card');
+    userName.textContent = theUsername;
 
-    var childIndex = cardId - 1;
-
-    var deck = document.getElementById('modal-deckname-card');
-    deck.textContent = theDeckname;
+    var deckName = document.getElementById('modal-deckname-card');
+    deckName.textContent = theDeckname;
 
     var id = document.getElementById('modal-card-id');
     id.textContent = cardId;
@@ -291,35 +285,56 @@ document.addEventListener('click', function(event) {
   if(theTarget.getAttribute('data-id') === 'modal-edit-card-btn-save') {
     var dataValue = theTarget.getAttribute('data-value');
 
-    var deck = document.getElementById('modal-deckname-card');
-    deck.textContent = theDeckname;
+    var deck = document.getElementById('table-deck');
+    var children = deck.childNodes;
+    //children[4].childNodes[0] === table row 0 (i.e. card #1)
+    //children[4].childNodes[0].childNodes[1] === tabe row 0, column #2 (i.e. Word)
+
+    var userName = document.getElementById('modal-username-card');
+    var deckName = document.getElementById('modal-deckname-card');
 
     var id = document.getElementById('modal-card-id');
-    id.textContent = cardId;
+    var childIndex = id.textContent - 1;
 
     var word = document.getElementById('modal-card-word');
-    word.value = children[4].childNodes[childIndex].childNodes[1].textContent;
+    children[4].childNodes[childIndex].childNodes[1].textContent = word.value;
 
     var pronunciation = document.getElementById('modal-card-pronunciation');
-    pronunciation.value = children[4].childNodes[childIndex].childNodes[2].textContent;
+    children[4].childNodes[childIndex].childNodes[2].textContent = pronunciation.value;
 
     var meaning = document.getElementById('modal-card-meaning');
-    meaning.value = children[4].childNodes[childIndex].childNodes[3].textContent;
+    children[4].childNodes[childIndex].childNodes[3].textContent = meaning.value;
 
     var type = document.getElementById('modal-card-type');
-    type.value = children[4].childNodes[childIndex].childNodes[4].textContent;
+    children[4].childNodes[childIndex].childNodes[4].textContent = type.value;
 
     var data = {
-      username: theUsername,
-      deckname: theDeckname,
-      card: cardId,
+      username: userName.textContent,
+      deckname: deckName.textContent,
+      card: id.textContent,
       word: word.value,
       pronunciation: pronunciation.value,
       meaning: meaning.value,
       type: type.value
     }
-    console.log(data);
+
+    var cardInfo = JSON.stringify(data);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/editCard', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(cardInfo);
+
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+
+      if(response === true) {
+        $('#myModal').modal('hide');
+      }
+
+    });
   }
+
 });
 
 var login = document.getElementById('btn-login');
@@ -548,7 +563,7 @@ function loadDeck(deckname, content) {
         var link = document.createElement('a');
         link.setAttribute('href', '#');
         link.setAttribute('data-id', 'deck-card-edit');
-        link.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id)
+        link.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         link.textContent = 'edit';
 
         var edit = document.createElement('th');

@@ -149,24 +149,25 @@ app.post('/editCard', jsonParser, function(req, res) {
   var type = req.body.type;
 
   var result = false;
-  var newcard = [];
 
   for(var i = 0; i < allDecks.length; i++) {
     if(allDecks[i].username === username && allDecks[i].deckname === deckname) {
-      if(allDecks[i].cards.id === cardId) {
-        result = true;
-        allDecks[i].cards.word = word;
-        allDecks[i].cards.pronunciation = pronunciation;
-        allDecks[i].meaning = meaning;
-        allDecks[i].type = type;
+      for(var n = 0; n < allDecks[i].cards.length; n++) {
+        if(allDecks[i].cards[n].id == cardId) {
+          result = true;
+          allDecks[i].cards[n].word = word;
+          allDecks[i].cards[n].pronunciation = pronunciation;
+          allDecks[i].cards[n].meaning = meaning;
+          allDecks[i].cards[n].type = type;
+        }
       }
     }
   }
 
   if(result != false) {
-    res.send('woohoo');
+    res.json(result);
   } else {
-    res.send('booo');
+    res.json(result);
   }
 
 });

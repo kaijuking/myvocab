@@ -188,11 +188,9 @@
                             <input class="btn btn-default" id='btn-create-new-deck' type="button" value="New Deck">
                           </div>
                           <div class='form-group'>
-
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
-                              Edit Deck
-                            </button>
+                            <input class="btn btn-default" id='btn-edit-deck' type="button" value="Edit Deck">
+                          </div>
+                          <div class='form-group'>
 
                             <!-- Modal -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -207,10 +205,15 @@
                                       <div class="panel-body">
                                         <div class='container'>
                                           <div class='row'>
-                                            <div class='col-md-3'>
+                                            <div class='col-md-2'>
+                                              <label for="modal-deckname-card">Username: </label><span id='modal-username-card'></span>
+                                            </div>
+                                          </div>
+                                          <div class='row'>
+                                            <div class='col-md-2'>
                                               <label for="modal-deckname-card">Deck: </label><span id='modal-deckname-card'></span>
                                             </div>
-                                            <div class='col-md-3'>
+                                            <div class='col-md-2'>
                                               <label for="modal-card-id">ID: </label><span id='modal-card-id'></span>
                                             </div>
                                           </div>
@@ -263,7 +266,7 @@
                                     </div>
                                   </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" id='modal-edit-card-btn-cancel' data-id='modal-edit-card-btn-cancel'>cancel</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id='modal-edit-card-btn-cancel' data-id='modal-edit-card-btn-cancel'>Close</button>
                                     <button type="button" class="btn btn-primary" id='modal-edit-card-btn-save' data-id='modal-edit-card-btn-save'>Save</button>
                                   </div>
                                 </div>
