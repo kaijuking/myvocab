@@ -269,6 +269,35 @@ app.post('/wwwjdicJapanese', jsonParser, function(req, res) {
 
 })
 
+function Deck(username, id, deckname, source, sourceimage, isbn, publisher, numcards, description, createdon, lastmodified, cards){
+  this.username = username;
+  this.id = id;
+  this.deckname = deckname;
+  this.source = source;
+  this.sourceimage = sourceimage; //'test.png'
+  this.isbn = isbn;
+  this.publisher = publisher;
+  this.numcards = numcards;
+  this.description = description;
+  this.createdon = createdon;
+  this.lastmodified = lastmodified;
+  this.cards = cards; //cards is an Array of cards
+}
+
+app.post('/newDeck', function(req, res) {
+
+var theCards = [{id: 1, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'},
+                {id: 2, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'}];
+
+var newDeck = new Deck('kaijuking', '7', 'test deck', 'the source', 'test.png', '999-999-999-999', 'some publisher', 5, 'lalalalalalalalalalalalalalalalalalala' , 1459288218005, 1459288218005, theCards);
+allDecks.push(newDeck);
+console.log(allDecks);
+
+
+  res.send('kaijuking');
+})
+
+
 app.listen(8080, function() {
   console.log('Project #2: MyVocab');
 });

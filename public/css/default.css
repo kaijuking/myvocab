@@ -38,7 +38,7 @@
   margin-right: 10px;
 }
 
-#panel-heading-review-card, #panel-body-review-card {
+#panel-heading-review-card, #panel-body-review-card, #panel-heading-new-deck, #panel-heading-new-deck-card, #panel-heading-new-deck-table {
   text-align: center;
 }
 
@@ -51,6 +51,11 @@
 
 #review-card-span {
   font-size: 15px;
+}
+
+#new-deck-card-table {
+  height: 100px;
+  overflow: scroll;
 }
 
 /*Onle Used For Testing. Will Remove Once Project Is Complete.*/

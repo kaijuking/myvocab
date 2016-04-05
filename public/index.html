@@ -185,7 +185,7 @@
                             </div>
                           </div>
                           <div class='form-group'>
-                            <input class="btn btn-default" id='btn-create-new-deck' type="button" value="New Deck">
+                            <input class="btn btn-default" id='btn-create-new-deck' data-id='btn-create-new-deck' type="button" value="New Deck">
                           </div>
                           <div class='form-group'>
                             <input class="btn btn-default" id='btn-edit-deck' data-id='btn-edit-deck' type="button" value="Edit Deck">
@@ -353,6 +353,142 @@
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" id='modal-edit-card-btn-cancel' data-id='modal-edit-card-btn-cancel'>Close</button>
                                     <button type="button" class="btn btn-primary" id='modal-edit-card-btn-save' data-id='modal-edit-card-btn-save'>Save</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal-new-deck" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                              <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModal-new-deck-label">New Deck</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="panel panel-primary">
+                                      <div class="panel-heading" id='panel-heading-new-deck'>New Deck Info</div>
+                                      <div class="panel-body">
+                                        <div class='container'>
+                                          <div class='row'>
+                                            <div class='col-md-2'>
+                                              <label for="modal-deckname-card">Username: </label><span id='modal-new-deck-username'></span>
+                                            </div>
+                                          </div>
+                                          <br>
+                                          <div class='row'>
+                                            <div class='col-md-3'>
+                                              <label for="modal-new-deck-deckname">Deck Name: </label><br>
+                                              <input type="text" placeholder="Deck Name" aria-describedby="basic-addon1" id='modal-new-deck-deckname'>
+                                            </div>
+                                            <div class='col-md-3'>
+                                              <label for="modal-new-deck-publisher">Publisher: </label><br>
+                                              <input type="text" placeholder="Publisher" aria-describedby="basic-addon1" id='modal-new-deck-publisher'>
+                                            </div>
+                                          </div>
+                                          <br>
+                                          <div class='row'>
+                                            <div class='col-md-3'>
+                                              <label for="modal-new-deck-source">Source: </label><br>
+                                              <input type="text" placeholder="Source" aria-describedby="basic-addon1" id='modal-new-deck-source'>
+                                            </div>
+                                            <div class='col-md-3'>
+                                              <label for="modal-new-deck-isbn">ISBN: </label><br>
+                                              <input type="text" placeholder="ISBN" aria-describedby="basic-addon1" id='modal-new-deck-isbn'>
+                                            </div>
+                                          </div>
+                                          <br>
+                                          <div class='row'>
+                                            <div class='col-md-12 col-sm-12'>
+                                              <label for="modal-new-deck-description">Description: </label><br>
+                                              <textarea id='modal-new-deck-description' placeholder="Description" rows="6" cols='50'></textarea>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="panel panel-primary">
+                                      <div class="panel-heading" id='panel-heading-new-deck-card'>Add Cards To Your Deck</div>
+                                      <div class="panel-body">
+                                        <div class='container'>
+                                          <div class='row'>
+                                            <div class='col-md-3'>
+                                              <label for="modal-new-deck-card-word">Word: </label><br>
+                                              <input type="text" class="form-control" placeholder="Word" aria-describedby="basic-addon1" id='modal-new-deck-card-word'>
+                                            </div>
+                                            <div class='col-md-3'>
+                                              <label for="modal-new-deck-card-pronunciation">Pronunciation: </label><br>
+                                              <input type="text" class="form-control" placeholder="Publisher" aria-describedby="basic-addon1" id='modal-new-deck-card-pronunciation'>
+                                            </div>
+                                          </div>
+                                          <br>
+                                          <div class='row'>
+                                            <div class='col-md-3'>
+                                              <label for="modal-new-deck-card-meaning">Meaning: </label><br>
+                                              <input type="text" class="form-control" placeholder="Meaning" aria-describedby="basic-addon1" id='modal-new-deck-card-meaning'>
+                                            </div>
+                                            <div class='col-md-3'>
+                                              <label for="modal-new-deck-card-type">Type: </label><br>
+                                              <input type="text" class="form-control" placeholder="Type" aria-describedby="basic-addon1" id='modal-new-deck-card-type'>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="panel-footer" id='panel-footer-review-card'>
+                                        <div class="btn-group" role="group" aria-label="...">
+                                          <button type="button" class="btn btn-default" id='btn-new-deck-add-card' data-id='btn-new-deck-add-card' data-value='btn-new-deck-add-card'>Add</button>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class='panel panel-primary'>
+                                      <div class='panel-heading' id='panel-heading-new-deck-table'>New Cards</div>
+                                      <div class='panel-body'>
+                                        <div class='table-responsive' id='new-deck-card-table'>
+                                          <table class='table table-hover'>
+                                            <thead>
+                                              <tr>
+                                                <th>#</th>
+                                                <th>Word</th>
+                                                <th>Pronunciation</th>
+                                                <th>Meaning</th>
+                                                <th>Type</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody id='new-deck-card-tbody'>
+                                              <tr>
+                                                <td>1</td>
+                                                <td>test</td>
+                                                <td>test</td>
+                                                <td>test</td>
+                                                <td>test</td>
+                                              </tr>
+                                              <tr>
+                                                <td>1</td>
+                                                <td>test</td>
+                                                <td>test</td>
+                                                <td>test</td>
+                                                <td>test</td>
+                                              </tr>
+                                              <tr>
+                                                <td>1</td>
+                                                <td>test</td>
+                                                <td>test</td>
+                                                <td>test</td>
+                                                <td>test</td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id='modal-new-deck-btn-cancel' data-id='modal-new-deck-btn-cancel'>Close</button>
+                                    <button type="button" class="btn btn-primary" id='modal-new-deck-btn-save' data-id='modal-new-deck-btn-save'>Save</button>
                                   </div>
                                 </div>
                               </div>

@@ -3,6 +3,7 @@
 var reviewCards;
 var startIndex = 0;
 var currentIndex = 0;
+var theCards = [];
 
 document.addEventListener('click', function(event) {
   event.preventDefault();
@@ -498,8 +499,7 @@ document.addEventListener('click', function(event) {
       table1.setAttribute('class', 'table table-hover hide');
       table2.setAttribute('class', 'table table-hover show');
 
-      //rawResults(lines);
-      myTest(lines);
+      jimBreen(lines);
 
     });
   }
@@ -540,11 +540,55 @@ document.addEventListener('click', function(event) {
       table1.setAttribute('class', 'table table-hover hide');
       table2.setAttribute('class', 'table table-hover show');
 
-      //rawResults(lines);
-      myTest(lines);
+      jimBreen(lines);
 
     });
   };
+
+  if(theTarget.getAttribute('data-id') === 'btn-create-new-deck') {
+    $('#myModal-new-deck').modal('show');
+  };
+
+  if(theTarget.getAttribute('data-id') === 'modal-new-deck-btn-save') {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/newDeck', true);
+    // xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send();
+
+    xhr.addEventListener('load', function() {
+      var response = xhr.responseText;
+
+      var info = {username: response};
+      var user = JSON.stringify(info);
+
+      var dropdown = new XMLHttpRequest();
+      dropdown.open('POST', '/deckDropDown', true);
+      dropdown.setRequestHeader('Content-Type', 'application/json');
+      dropdown.send(user);
+
+      dropdown.addEventListener('load', function() {
+        var deckNames = JSON.parse(dropdown.responseText);
+        var username = deckNames[0];
+        var decks = deckNames[1];
+
+        var myDropDown = 'deck-dropdown';
+        var myItems = 'deck-dropdown-items';
+
+        loadDropDown(username, decks, myDropDown, myItems);
+      });
+    });
+  };
+
+  if(theTarget.getAttribute('data-id') === 'btn-new-deck-add-card') {
+    var theWord = document.getElementById('modal-new-deck-card-word').value;
+    var thePronunciation = document.getElementById('modal-new-deck-card-pronunciation').value;
+    var theMeaning = document.getElementById('modal-new-deck-card-meaning').value;
+    var theType = document.getElementById('modal-new-deck-card-type').value;
+
+    var theItem = {word: theWord, pronunciation: thePronunciation, meaning: theMeaning, type: theType};
+    theCards.push(theItem);
+    console.log(theCards);
+  }
 
 });
 
@@ -794,6 +838,7 @@ function loadDeck(deckname, content) {
   };
 };
 
+myItems = 'deck-dropdown-items'
 function loadDropDown(username, decks, myDropDown, myItems) {
 
   var dropdown = document.getElementById(myDropDown);
@@ -930,7 +975,7 @@ function rawResults(content) {
   };
 };
 
-function myTest(content) {
+function jimBreen(content) {
   var table = document.getElementById('table-search-raw');
   var tbody = document.getElementById('table-search-results-raw');
 
