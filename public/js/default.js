@@ -483,13 +483,10 @@ document.addEventListener('click', function(event) {
       var testText = '';
 
       for(var i = (theBody.indexOf('<pre>') + 5); i < theBody.lastIndexOf('</pre>'); i++) {
-        // console.log(response[0].body[i]);
         testText = testText + response[0].body[i];
       }
 
-      //console.log(testText);
       var lines = testText.split('\n');
-      //console.log(lines);
 
       for(var i = 1; i < lines.length; i++) {
         console.log(lines[i]);
@@ -501,7 +498,8 @@ document.addEventListener('click', function(event) {
       table1.setAttribute('class', 'table table-hover hide');
       table2.setAttribute('class', 'table table-hover show');
 
-      rawResults(lines);
+      //rawResults(lines);
+      myTest(lines);
 
     });
   }
@@ -527,13 +525,10 @@ document.addEventListener('click', function(event) {
       var testText = '';
 
       for(var i = (theBody.indexOf('<pre>') + 5); i < theBody.lastIndexOf('</pre>'); i++) {
-        // console.log(response[0].body[i]);
         testText = testText + response[0].body[i];
       }
 
-      //console.log(testText);
       var lines = testText.split('\n');
-      //console.log(lines);
 
       for(var i = 1; i < lines.length; i++) {
         console.log(lines[i]);
@@ -545,20 +540,11 @@ document.addEventListener('click', function(event) {
       table1.setAttribute('class', 'table table-hover hide');
       table2.setAttribute('class', 'table table-hover show');
 
-      rawResults(lines);
+      //rawResults(lines);
+      myTest(lines);
 
     });
-  }
-
-  if(theTarget.getAttribute('data-id') === 'btn-test') {
-    var str = 'dog';
-    var str1 = '先生';
-    console.log(str.charCodeAt(0));
-    console.log(str1.charCodeAt(0));
-    console.log('-----');
-    console.log(encodeURIComponent(str));
-    console.log(encodeURIComponent(str1));
-  }
+  };
 
 });
 
@@ -635,10 +621,10 @@ function loadProfile(info) {
       var table = document.getElementById('user-profile-deck-table');
 
       for(var i = 0; i < length; i++) {
-        var id = document.createElement('th');
+        var id = document.createElement('td');
         id.textContent = i + 1;
 
-        var title = document.createElement('th');
+        var title = document.createElement('td');
         var link = document.createElement('a');
         link.setAttribute('href', '#');
         link.setAttribute('data-id', 'mydeck');
@@ -646,14 +632,14 @@ function loadProfile(info) {
         link.textContent = info[1][i].deckname;
         title.appendChild(link);
 
-        var cards = document.createElement('th');
+        var cards = document.createElement('td');
         cards.textContent = info[1][i].numcards;
 
-        var description = document.createElement('th');
+        var description = document.createElement('td');
         description.textContent = info[1][i].description;
 
         var myDate = new Date(info[1][i].createdon);
-        var created = document.createElement('th');
+        var created = document.createElement('td');
         created.textContent = (myDate.getMonth() + 1) + '/' + myDate.getUTCDate() + '/' + myDate.getFullYear();
 
         var row = document.createElement('tr');
@@ -761,27 +747,27 @@ function loadDeck(deckname, content) {
   for(var i = 0; i < content.length; i++) {
     if(content[i].deckname === deckname) {
       for(var n = 0; n < content[i].cards.length; n++) {
-        var cardNum = document.createElement('th');
+        var cardNum = document.createElement('td');
         cardNum.setAttribute('data-id', 'id');
         cardNum.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         cardNum.textContent = content[i].cards[n].id;
 
-        var theWord = document.createElement('th');
+        var theWord = document.createElement('td');
         theWord.setAttribute('data-id', 'word');
         theWord.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         theWord.textContent = content[i].cards[n].word;
 
-        var thePronunciation = document.createElement('th');
+        var thePronunciation = document.createElement('td');
         thePronunciation.setAttribute('data-id', 'pronunciation');
         thePronunciation.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         thePronunciation.textContent = content[i].cards[n].pronunciation;
 
-        var theMeaning = document.createElement('th');
+        var theMeaning = document.createElement('td');
         theMeaning.setAttribute('data-id', 'meaning');
         theMeaning.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         theMeaning.textContent = content[i].cards[n].meaning;
 
-        var theType = document.createElement('th');
+        var theType = document.createElement('td');
         theType.setAttribute('data-id', 'type');
         theType.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         theType.textContent = content[i].cards[n].type;
@@ -792,7 +778,7 @@ function loadDeck(deckname, content) {
         link.setAttribute('data-value', content[i].username + '-' + content[i].deckname + '-' + content[i].cards[n].id);
         link.textContent = 'edit';
 
-        var edit = document.createElement('th');
+        var edit = document.createElement('td');
         edit.appendChild(link);
 
         var row = document.createElement('tr');
@@ -901,16 +887,16 @@ function searchResults(content) {
 
   /*Populate The Table With The Search Results*/
   for(var i = 0; i < content.length; i++) {
-    var japanese = document.createElement('th');
+    var japanese = document.createElement('td');
     japanese.textContent = content[i].japanese;
 
-    var pronunciation = document.createElement('th');
+    var pronunciation = document.createElement('td');
     pronunciation.textContent = content[i].pronunciation;
 
-    var english = document.createElement('th');
+    var english = document.createElement('td');
     english.textContent = content[i].english;
 
-    var type = document.createElement('th');
+    var type = document.createElement('td');
     type.textContent = content[i].pos;
 
     var row = document.createElement('tr');
@@ -935,7 +921,7 @@ function rawResults(content) {
 
   /*Populate The Table With The Search Results*/
   for(var i = 1; i < content.length; i++) {
-    var results = document.createElement('th');
+    var results = document.createElement('td');
     results.textContent = content[i];
 
     var row = document.createElement('tr');
@@ -943,3 +929,57 @@ function rawResults(content) {
     tableBody.appendChild(row);
   };
 };
+
+function myTest(content) {
+  var table = document.getElementById('table-search-raw');
+  var tbody = document.getElementById('table-search-results-raw');
+
+  var lines = [];
+  var word = [];
+
+  for(var i = 0; i < content.length; i++) {
+    var theValue = content[i].slice(0, -1);
+    lines.push(theValue);
+  }
+
+  for(var i = 1; i < (lines.length - 1); i++) {
+    word.push(lines[i].split(' /', 2));
+  }
+
+  if(tbody != null) {
+    table.removeChild(tbody);
+    var tableBody = document.createElement('tbody');
+    tableBody.setAttribute('id', 'table-search-results-raw');
+    table.appendChild(tableBody);
+  }
+
+  for(var i = 0; i < word.length; i++) {
+
+    var stringArray = word[i][0].split(' ', 2);
+    console.log(stringArray);
+
+    if(stringArray[1] != null) {
+      var pronunciation = stringArray[1].slice(1, -1);
+    } else {
+      var pronunciation = 'N/A';
+    }
+
+    var theWord = document.createElement('td');
+    theWord.setAttribute('colspan', '3');
+    theWord.textContent = stringArray[0];
+
+    var thePronunciation = document.createElement('td');
+    thePronunciation.setAttribute('colspan', '3');
+    thePronunciation.textContent = pronunciation;
+
+    var theMeaning = document.createElement('td');
+    theMeaning.textContent = word[i][1];
+
+    var row = document.createElement('tr');
+    row.appendChild(theWord);
+    row.appendChild(thePronunciation);
+    row.appendChild(theMeaning);
+    tableBody.appendChild(row);
+  }
+
+}
