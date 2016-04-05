@@ -3,7 +3,10 @@ var express = require('express');
 var path = require('path');
 var jsonParser = require('body-parser').json();
 var cookieParser = require('cookie-parser');
+var request = require('request');
+var Dictionary = require('japaneasy');
 var app = express();
+var dict = new Dictionary();
 
 /*Required Data Objects*/
 var allUsers = require('./user.js');
@@ -208,6 +211,63 @@ app.post('/editDeck', jsonParser, function(req, res) {
   }
 
 });
+
+app.post('/search', jsonParser, function(req, res) {
+
+  /*Search By English Word Only Using Japaneasy*/
+  var word = req.body.search;
+  dict(word).then(function(result) {
+    console.log(result);
+    res.send(result);
+  });
+
+})
+
+app.post('/wwwjdicEnglish', jsonParser, function(req, res) {
+  var term = req.body.search;
+
+  var theURL = 'http://nihongo.monash.edu/cgi-bin/wwwjdic?1ZUE' + term;
+
+  var p1 = new Promise(function(resolve, reject) {
+    request(theURL, function(error, response, body) {
+      if(!error && response.statusCode == 200) {
+       resolve(response);
+     }
+    })
+  })
+
+  Promise.all([p1]).then(function(value) {
+    console.log(value);
+     res.json(value);
+  }, function(reason) {
+    console.log(reason)
+ });
+
+})
+
+app.post('/wwwjdicJapanese', jsonParser, function(req, res) {
+  var term = req.body.search;
+  var theTerm = encodeURIComponent(term);
+
+  //1 = EDICT, Z = backdoor entry (raw dictionary display), U = where the lookup text is in UTF-8, J = for Japanese keys
+  var theURL = 'http://nihongo.monash.edu/cgi-bin/wwwjdic?1ZUJ' + theTerm;
+
+  var p1 = new Promise(function(resolve, reject) {
+    request(theURL, function(error, response, body) {
+      if(!error && response.statusCode == 200) {
+       resolve(response);
+     }
+    })
+  })
+
+  Promise.all([p1]).then(function(value) {
+     console.log(value);
+     res.json(value);
+  }, function(reason) {
+   console.log(reason)
+ });
+
+})
 
 app.listen(8080, function() {
   console.log('Project #2: MyVocab');

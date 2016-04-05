@@ -491,7 +491,6 @@
                                 </div>
                               </div>
                             </div>
-
                           </div>
                         </div>
                         <hr>
@@ -508,14 +507,68 @@
                             </div>
                           </div>
                         </div>
-
                       </div>
                     </div>
-
                   </div>
                   <div role="tabpanel" class="tab-pane" id="user-search">
                     <div class='panel panel-default'>
                       <div class='panel-body'>
+                        <div class='container'>
+                          <div class='row'>
+                            <div class='col-md-12'>
+                              <p>Example Search: English = teacher or monster, Japanese = 先生 or 怪獣</p>
+                              <p>Japaneasy: An NPM module which (currently) can only be used to look up English words.</p>
+                              </p>WWWJDIC (English): lookup English words, WWWJDIC (Japanese): lookup Japanese words</p>
+                              <p>WWWJDIC results are courtesy of Jim Breen's website: <a href='http://www.edrdg.org/cgi-bin/wwwjdic/wwwjdic?1C'>wwwjdic</a>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-8">
+                              <div class="input-group">
+                                <input type="text" class="form-control" id='search-input' placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" id='btn-search' data-id='btn-search' data-value='btn-search' type="button" data-toggle="tooltip" data-placement="top" title="Can Only Lookup English Words..(for now)">Japaneasy</button>
+                                </span>
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" id='btn-search-raw-english' data-id='btn-search-raw-english' data-value='btn-search-raw-english' type="button">WWWJDIC (English)</button>
+                                </span>
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" id='btn-search-raw-japanese' data-id='btn-search-raw-japanese' data-value='btn-search-raw-japanese' type="button">WWWJDIC (Japanese)</button>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class='row'>
+                          <div class='col-md-12'>
+                            <div class='table-responsive'>
+                              <table class='table table-hover hide' id='table-search'>
+                                <thead>
+                                  <tr>
+                                    <th>Japanese</th>
+                                    <th>Pronunciation</th>
+                                    <th>English</th>
+                                    <th>Type</th>
+                                  </tr>
+                                </thead>
+                                <tbody id='table-search-results'>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class='table-responsive'>
+                              <table class='table table-hover hide' id='table-search-raw'>
+                                <thead>
+                                  <tr>
+                                    <th>Results</th>
+                                  </tr>
+                                </thead>
+                                <tbody id='table-search-results-raw'>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

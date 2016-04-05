@@ -19,6 +19,8 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.1",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "japaneasy": "^0.2.2",
+    "request": "^2.69.0"
   }
 }

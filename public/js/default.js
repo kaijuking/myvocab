@@ -435,6 +435,131 @@ document.addEventListener('click', function(event) {
     });
   }
 
+  if(theTarget.getAttribute('data-id') === 'btn-search') {
+    var search = document.getElementById('search-input').value;
+
+    var data = {
+      search: search
+    }
+
+    var searchData = JSON.stringify(data);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/search', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(searchData);
+
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+      console.log(response[0]);
+      console.log(response);
+      var table1 = document.getElementById('table-search');
+      var table2 = document.getElementById('table-search-raw');
+
+      table1.setAttribute('class', 'table table-hover show');
+      table2.setAttribute('class', 'table table-hover hide');
+      searchResults(response);
+    });
+  }
+
+  if(theTarget.getAttribute('data-id') === 'btn-search-raw-english') {
+    var search = document.getElementById('search-input').value;
+
+    var data = {
+      search: search
+    }
+
+    var searchData = JSON.stringify(data);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/wwwjdicEnglish', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(searchData);
+
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+
+      var theBody = response[0].body;
+      var testText = '';
+
+      for(var i = (theBody.indexOf('<pre>') + 5); i < theBody.lastIndexOf('</pre>'); i++) {
+        // console.log(response[0].body[i]);
+        testText = testText + response[0].body[i];
+      }
+
+      //console.log(testText);
+      var lines = testText.split('\n');
+      //console.log(lines);
+
+      for(var i = 1; i < lines.length; i++) {
+        console.log(lines[i]);
+      }
+
+      var table1 = document.getElementById('table-search');
+      var table2 = document.getElementById('table-search-raw');
+
+      table1.setAttribute('class', 'table table-hover hide');
+      table2.setAttribute('class', 'table table-hover show');
+
+      rawResults(lines);
+
+    });
+  }
+
+  if(theTarget.getAttribute('data-id') === 'btn-search-raw-japanese') {
+    var search = document.getElementById('search-input').value;
+
+    var data = {
+      search: search
+    }
+
+    var searchData = JSON.stringify(data);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/wwwjdicJapanese', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(searchData);
+
+    xhr.addEventListener('load', function() {
+      var response = JSON.parse(xhr.responseText);
+
+      var theBody = response[0].body;
+      var testText = '';
+
+      for(var i = (theBody.indexOf('<pre>') + 5); i < theBody.lastIndexOf('</pre>'); i++) {
+        // console.log(response[0].body[i]);
+        testText = testText + response[0].body[i];
+      }
+
+      //console.log(testText);
+      var lines = testText.split('\n');
+      //console.log(lines);
+
+      for(var i = 1; i < lines.length; i++) {
+        console.log(lines[i]);
+      }
+
+      var table1 = document.getElementById('table-search');
+      var table2 = document.getElementById('table-search-raw');
+
+      table1.setAttribute('class', 'table table-hover hide');
+      table2.setAttribute('class', 'table table-hover show');
+
+      rawResults(lines);
+
+    });
+  }
+
+  if(theTarget.getAttribute('data-id') === 'btn-test') {
+    var str = 'dog';
+    var str1 = '先生';
+    console.log(str.charCodeAt(0));
+    console.log(str1.charCodeAt(0));
+    console.log('-----');
+    console.log(encodeURIComponent(str));
+    console.log(encodeURIComponent(str1));
+  }
+
 });
 
 var login = document.getElementById('btn-login');
@@ -762,3 +887,59 @@ function loadCards(user, deckname, content) {
     }
   }
 }
+
+function searchResults(content) {
+  var table = document.getElementById('table-search');
+  var tbody = document.getElementById('table-search-results');
+
+  if(tbody != null) {
+    table.removeChild(tbody);
+    var tableBody = document.createElement('tbody');
+    tableBody.setAttribute('id', 'table-search-results');
+    table.appendChild(tableBody);
+  }
+
+  /*Populate The Table With The Search Results*/
+  for(var i = 0; i < content.length; i++) {
+    var japanese = document.createElement('th');
+    japanese.textContent = content[i].japanese;
+
+    var pronunciation = document.createElement('th');
+    pronunciation.textContent = content[i].pronunciation;
+
+    var english = document.createElement('th');
+    english.textContent = content[i].english;
+
+    var type = document.createElement('th');
+    type.textContent = content[i].pos;
+
+    var row = document.createElement('tr');
+    row.appendChild(japanese);
+    row.appendChild(pronunciation);
+    row.appendChild(english);
+    row.appendChild(type);
+    tableBody.appendChild(row);
+  };
+};
+
+function rawResults(content) {
+  var table = document.getElementById('table-search-raw');
+  var tbody = document.getElementById('table-search-results-raw');
+
+  if(tbody != null) {
+    table.removeChild(tbody);
+    var tableBody = document.createElement('tbody');
+    tableBody.setAttribute('id', 'table-search-results-raw');
+    table.appendChild(tableBody);
+  }
+
+  /*Populate The Table With The Search Results*/
+  for(var i = 1; i < content.length; i++) {
+    var results = document.createElement('th');
+    results.textContent = content[i];
+
+    var row = document.createElement('tr');
+    row.appendChild(results);
+    tableBody.appendChild(row);
+  };
+};
