@@ -12,6 +12,9 @@ var dict = new Dictionary();
 var allUsers = require('./user.js');
 var allDecks = require('./decks.js');
 
+/*Used To Determine Which User Is Logged In*/
+var activeUser;
+
 var defaultMiddleware = express.static('./public');
 app.use(defaultMiddleware);
 app.use(cookieParser());
@@ -26,6 +29,7 @@ app.post('/login', jsonParser, function(req, res) {
   for(var i = 0; i < allUsers.length; i++) {
     if(allUsers[i].username === username && allUsers[i].password === password) {
       result = true;
+      activeUser = username;
       res.cookie('myvocabRemember', 'true-' + username.toString());
     }
   }
@@ -37,6 +41,15 @@ app.post('/login', jsonParser, function(req, res) {
   }
 });
 
+app.get('/activeUser', function(req, res) {
+  console.log('route activeUser was called');
+  if(activeUser != null) {
+    res.send(activeUser);
+  } else {
+    res.send(null);
+  }
+})
+
 /*Check To See If User Has A Valid Session Or Not*/
 app.get('/session', function(req, res) {
   if(req.cookies.myvocabRemember) {
@@ -45,7 +58,7 @@ app.get('/session', function(req, res) {
     var username = stringArray[1];
     res.send(username);
   } else {
-    res.send(false);
+    res.send('false');
   }
 });
 
@@ -261,10 +274,10 @@ app.post('/wwwjdicJapanese', jsonParser, function(req, res) {
   })
 
   Promise.all([p1]).then(function(value) {
-     console.log(value);
-     res.json(value);
+    console.log(value);
+    res.json(value);
   }, function(reason) {
-   console.log(reason)
+    console.log(reason)
  });
 
 })
@@ -284,19 +297,32 @@ function Deck(username, id, deckname, source, sourceimage, isbn, publisher, numc
   this.cards = cards; //cards is an Array of cards
 }
 
-app.post('/newDeck', function(req, res) {
+app.post('/newDeck', jsonParser, function(req, res) {
 
-var theCards = [{id: 1, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'},
-                {id: 2, word: '食べる', pronunciation: 'たべる', meaning: 'to eat', type: 'ru-verb'}];
+  var username = req.body.username;
+  var deckId = allDecks.length + 1;
+  var deckname = req.body.deckname;
+  var source = req.body.source;
+  var isbn = req.body.isbn;
+  var publisher = req.body.publisher;
+  var numCards = req.body.cards.length;
+  var description = req.body.description;
+  var createdOn = req.body.createdon;
+  var lastModified = req.body.createdon;
+  var cards = req.body.cards;
 
-var newDeck = new Deck('kaijuking', '7', 'test deck', 'the source', 'test.png', '999-999-999-999', 'some publisher', 5, 'lalalalalalalalalalalalalalalalalalala' , 1459288218005, 1459288218005, theCards);
-allDecks.push(newDeck);
-console.log(allDecks);
+  var newDeck = new Deck(username, deckId, deckname, source, 'default2.jpg', isbn, publisher, numCards, description, createdOn, lastModified, cards);
+  allDecks.push(newDeck);
+  console.log(allDecks);
 
+  for(var i = 0; i < allUsers.length; i++) {
+    if(allUsers[i].username === username) {
+      allUsers[i].decks.push(deckname);
+    }
+  }
 
-  res.send('kaijuking');
-})
-
+  res.send(username);
+});
 
 app.listen(8080, function() {
   console.log('Project #2: MyVocab');

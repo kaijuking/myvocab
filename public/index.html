@@ -140,7 +140,7 @@
                       <div class='panel-body'>
                         <div class="media">
                           <div class="media-left media-middle">
-                            <img class="media-object profile-picture img-thumbnail" id='user-profile-picture' src="images/test.png" alt="...">
+                            <img class="media-object profile-picture img-thumbnail" id='user-profile-picture' src="images/default2.jpg" alt="...">
                           </div>
                           <div class="media-body well">
                             <label class='span-space' for="user-username">Username: </label><span id='user-username'></span><br>
@@ -360,7 +360,7 @@
 
                             <!-- Modal -->
                             <div class="modal fade" id="myModal-new-deck" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                              <div class="modal-dialog modal-lg" role="document">
+                              <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -372,37 +372,40 @@
                                       <div class="panel-body">
                                         <div class='container'>
                                           <div class='row'>
-                                            <div class='col-md-2'>
-                                              <label for="modal-deckname-card">Username: </label><span id='modal-new-deck-username'></span>
+                                            <div class='col-md-3 col-sm-12'>
+                                              <label for="modal-new-deck-username">Username: </label><span id='modal-new-deck-username'></span>
+                                            </div>
+                                            <div class='col-md-3 col-sm-12'>
+                                              <label for="modal-new-deck-createdon">Created On: </label><span id='modal-new-deck-createdon'></span>
                                             </div>
                                           </div>
                                           <br>
                                           <div class='row'>
-                                            <div class='col-md-3'>
+                                            <div class='col-md-3 col-sm-12'>
                                               <label for="modal-new-deck-deckname">Deck Name: </label><br>
-                                              <input type="text" placeholder="Deck Name" aria-describedby="basic-addon1" id='modal-new-deck-deckname'>
+                                              <input type="text" class="form-control" placeholder="Deck Name" aria-describedby="basic-addon1" id='modal-new-deck-deckname'>
                                             </div>
-                                            <div class='col-md-3'>
+                                            <div class='col-md-3 col-sm-12'>
                                               <label for="modal-new-deck-publisher">Publisher: </label><br>
-                                              <input type="text" placeholder="Publisher" aria-describedby="basic-addon1" id='modal-new-deck-publisher'>
+                                              <input type="text"  class="form-control"placeholder="Publisher" aria-describedby="basic-addon1" id='modal-new-deck-publisher'>
                                             </div>
                                           </div>
                                           <br>
                                           <div class='row'>
-                                            <div class='col-md-3'>
+                                            <div class='col-md-3 col-sm-12'>
                                               <label for="modal-new-deck-source">Source: </label><br>
-                                              <input type="text" placeholder="Source" aria-describedby="basic-addon1" id='modal-new-deck-source'>
+                                              <input type="text"  class="form-control"placeholder="Source" aria-describedby="basic-addon1" id='modal-new-deck-source'>
                                             </div>
-                                            <div class='col-md-3'>
+                                            <div class='col-md-3 col-sm-12'>
                                               <label for="modal-new-deck-isbn">ISBN: </label><br>
-                                              <input type="text" placeholder="ISBN" aria-describedby="basic-addon1" id='modal-new-deck-isbn'>
+                                              <input type="text"  class="form-control"placeholder="ISBN" aria-describedby="basic-addon1" id='modal-new-deck-isbn'>
                                             </div>
                                           </div>
                                           <br>
                                           <div class='row'>
-                                            <div class='col-md-12 col-sm-12'>
+                                            <div class='col-md-6 col-sm-12'>
                                               <label for="modal-new-deck-description">Description: </label><br>
-                                              <textarea id='modal-new-deck-description' placeholder="Description" rows="6" cols='50'></textarea>
+                                              <textarea id='modal-new-deck-description' class="form-control" placeholder="Description" rows="6" cols='65'></textarea>
                                             </div>
                                           </div>
                                         </div>
@@ -420,7 +423,7 @@
                                             </div>
                                             <div class='col-md-3'>
                                               <label for="modal-new-deck-card-pronunciation">Pronunciation: </label><br>
-                                              <input type="text" class="form-control" placeholder="Publisher" aria-describedby="basic-addon1" id='modal-new-deck-card-pronunciation'>
+                                              <input type="text" class="form-control" placeholder="Pronunciation" aria-describedby="basic-addon1" id='modal-new-deck-card-pronunciation'>
                                             </div>
                                           </div>
                                           <br>
@@ -446,8 +449,8 @@
                                     <div class='panel panel-primary'>
                                       <div class='panel-heading' id='panel-heading-new-deck-table'>New Cards</div>
                                       <div class='panel-body'>
-                                        <div class='table-responsive' id='new-deck-card-table'>
-                                          <table class='table table-hover'>
+                                        <div class='table-responsive' id='new-deck-table'>
+                                          <table class='table table-hover' id='new-deck-card-table'>
                                             <thead>
                                               <tr>
                                                 <th>#</th>
@@ -455,30 +458,10 @@
                                                 <th>Pronunciation</th>
                                                 <th>Meaning</th>
                                                 <th>Type</th>
+                                                <th>Remove</th>
                                               </tr>
                                             </thead>
                                             <tbody id='new-deck-card-tbody'>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>test</td>
-                                                <td>test</td>
-                                                <td>test</td>
-                                                <td>test</td>
-                                              </tr>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>test</td>
-                                                <td>test</td>
-                                                <td>test</td>
-                                                <td>test</td>
-                                              </tr>
-                                              <tr>
-                                                <td>1</td>
-                                                <td>test</td>
-                                                <td>test</td>
-                                                <td>test</td>
-                                                <td>test</td>
-                                              </tr>
                                             </tbody>
                                           </table>
                                         </div>
@@ -488,7 +471,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" id='modal-new-deck-btn-cancel' data-id='modal-new-deck-btn-cancel'>Close</button>
-                                    <button type="button" class="btn btn-primary" id='modal-new-deck-btn-save' data-id='modal-new-deck-btn-save'>Save</button>
+                                    <button type="button" class="btn btn-primary" id='modal-new-deck-btn-save' data-id='modal-new-deck-btn-save' data-loading-text="Creating...">Save</button>
                                   </div>
                                 </div>
                               </div>
@@ -498,7 +481,7 @@
                         </div>
                         <div class="media">
                           <div class="media-left media-middle">
-                            <img class="media-object profile-picture img-thumbnail" id='deck-source-image' src="images/test.png" alt="...">
+                            <img class="media-object profile-picture img-thumbnail" id='deck-source-image' src="images/default2.jpg" alt="...">
                           </div>
                           <div class="media-body well">
                             <div class='container'>
@@ -584,7 +567,7 @@
                         </div>
                         <div class="media">
                           <div class="media-left media-middle">
-                            <img class="media-object profile-picture img-thumbnail" id='deck-mycards-source-image' src="images/test.png" alt="...">
+                            <img class="media-object profile-picture img-thumbnail" id='deck-mycards-source-image' src="images/default2.jpg" alt="...">
                           </div>
                           <div class="media-body well">
                             <div class='container'>
