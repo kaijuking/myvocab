@@ -324,6 +324,11 @@ app.post('/newDeck', jsonParser, function(req, res) {
   res.send(username);
 });
 
-app.listen(8080, function() {
-  console.log('Project #2: MyVocab');
+// app.listen(8080, function() {
+//   console.log('Project #2: MyVocab');
+// });
+
+var port = process.env.PORT || 1337;
+app.listen(port, function() {
+ console.log("listening on port " + port);
 });

@@ -536,8 +536,8 @@ document.addEventListener('click', function(event) {
       var table1 = document.getElementById('table-search');
       var table2 = document.getElementById('table-search-raw');
 
-      table1.setAttribute('class', 'table table-hover hide');
-      table2.setAttribute('class', 'table table-hover show');
+      table1.setAttribute('class', 'table table-hover hide table-striped');
+      table2.setAttribute('class', 'table table-hover show table-striped');
 
       jimBreen(lines);
 
@@ -577,8 +577,8 @@ document.addEventListener('click', function(event) {
       var table1 = document.getElementById('table-search');
       var table2 = document.getElementById('table-search-raw');
 
-      table1.setAttribute('class', 'table table-hover hide');
-      table2.setAttribute('class', 'table table-hover show');
+      table1.setAttribute('class', 'table table-hover hide table-striped');
+      table2.setAttribute('class', 'table table-hover show table-striped');
 
       jimBreen(lines);
 
