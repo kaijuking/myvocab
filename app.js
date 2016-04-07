@@ -56,6 +56,7 @@ app.get('/session', function(req, res) {
     var cookie = req.cookies.myvocabRemember;
     var stringArray = cookie.split('-', 2);
     var username = stringArray[1];
+    activeUser = username;
     res.send(username);
   } else {
     res.send('false');
@@ -330,5 +331,5 @@ app.post('/newDeck', jsonParser, function(req, res) {
 
 var port = process.env.PORT || 1337;
 app.listen(port, function() {
- console.log("listening on port " + port);
+ console.log("Project #2 (MyVocab) is listening on port " + port);
 });

@@ -1,5 +1,6 @@
 'use-strict';
 
+//Used In One Or More 'click' Event Listeners 
 var reviewCards;
 var startIndex = 0;
 var currentIndex = 0;
@@ -15,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function(event){
 
   session.addEventListener('load', function() {
     var username = session.responseText;
-    console.log(username);
 
     if(username === 'false') {
       var loginPage = document.getElementById('login-page');
@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded', function(event){
       profile.addEventListener('load', function() {
         var info = JSON.parse(profile.responseText);
         loadProfile(info);
+
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        });
       });
     }
   })
@@ -616,9 +620,9 @@ document.addEventListener('click', function(event) {
     var theItem = {id: theId, word: theWord, pronunciation: thePronunciation, meaning: theMeaning, type: theType};
     theCards.push(theItem);
     theId++;
-    console.log(theItem);
 
     addNewCard(theItem);
+    resetNewCard();
   }
 
   if(theTarget.getAttribute('data-id') === 'modal-new-deck-btn-cancel') {
@@ -628,7 +632,6 @@ document.addEventListener('click', function(event) {
   if(theTarget.getAttribute('data-id') === 'modal-new-deck-btn-save') {
 
     var saveButton = document.getElementById('modal-new-deck-btn-save');
-    saveButton.setAttribute('disabled', 'disabled');
 
     var username = document.getElementById('modal-new-deck-username').textContent;
     var deckname = document.getElementById('modal-new-deck-deckname').value;
@@ -639,62 +642,100 @@ document.addEventListener('click', function(event) {
     var createdon = Date.now();
     var cards = theCards;
 
-    var data = {
-      username: username,
-      deckname: deckname,
-      publisher: publisher,
-      source: source,
-      isbn: isbn,
-      description: description,
-      createdon: createdon,
-      cards: cards
+    if(deckname === null || deckname === '') {
+      var warning = document.getElementById('deckname-warning-alert');
+      warning.setAttribute('class', 'alert alert-danger alert-dismissible show');
+    } else {
+      saveButton.setAttribute('disabled', 'disabled');
+      var data = {
+        username: username,
+        deckname: deckname,
+        publisher: publisher,
+        source: source,
+        isbn: isbn,
+        description: description,
+        createdon: createdon,
+        cards: cards
+      }
+
+      var deck = JSON.stringify(data);
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/newDeck', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(deck);
+
+      var theResponse = '';
+      xhr.addEventListener('load', function() {
+        var response = xhr.responseText;
+
+        if(response != 'error') {
+          var info = {username: response};
+          var user = JSON.stringify(info);
+
+          var dropdown = new XMLHttpRequest();
+          dropdown.open('POST', '/deckDropDown', true);
+          dropdown.setRequestHeader('Content-Type', 'application/json');
+          dropdown.send(user);
+
+          dropdown.addEventListener('load', function() {
+            var deckNames = JSON.parse(dropdown.responseText);
+            var username = deckNames[0];
+            var decks = deckNames[1];
+
+            var myDropDown = 'deck-dropdown';
+            var myItems = 'deck-dropdown-items';
+
+            loadDropDown(username, decks, myDropDown, myItems);
+            saveButton.removeAttribute('disabled');
+            resetNewDeck();
+            $('#myModal-new-deck').modal('hide');
+
+            var theDropDown = document.getElementById('deck-dropdown-items');
+            var count = {numcards: theDropDown.children.length};
+            console.log(count)
+            updateProfile(count);
+
+            var profileDeck = {id: theDropDown.children.length, username: username, deckname: deckname, numcards: cards.length, description: description, createdon: createdon};
+            newProfileDeck(profileDeck);
+
+            var warning = document.getElementById('deckname-warning-alert');
+            warning.setAttribute('class', 'alert alert-danger alert-dismissible hide');
+
+          });
+        };
+      });
+    }
+  };
+
+  if(theTarget.getAttribute('data-id') === 'new-deck-card-remove') {
+    var dataValue = theTarget.getAttribute('data-value');
+
+    var stringArray = dataValue.split('-', 2);
+    var rowNum = stringArray[1] - 1;
+
+    var tbody = document.getElementById('new-deck-card-tbody');
+    var children = tbody.children;
+
+    tbody.removeChild(children[rowNum]);
+    theId--;
+
+    for(var i = (rowNum); i < children.length; i++) {
+      var num = children[i].children[0].textContent;
+      children[i].children[0].textContent = num - 1;
+      children[i].children[0].setAttribute('data-id', num - 1);
+      children[i].children[0].setAttribute('data-value', num - 1);
+
+      //Updating The Data-Value Of The "Remove" Column For Row i
+      children[i].children[5].children[0].setAttribute('data-value', 'remove new card-' + (num - 1));
     }
 
-    var deck = JSON.stringify(data);
+    theCards.splice(rowNum, 1);
+    for(var i = 0; i < theCards.length; i++) {
+      theCards[i].id = i + 1;
+    }
+  }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/newDeck', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(deck);
-
-    var theResponse = '';
-    xhr.addEventListener('load', function() {
-      var response = xhr.responseText;
-
-      if(response != 'error') {
-        var info = {username: response};
-        var user = JSON.stringify(info);
-
-        var dropdown = new XMLHttpRequest();
-        dropdown.open('POST', '/deckDropDown', true);
-        dropdown.setRequestHeader('Content-Type', 'application/json');
-        dropdown.send(user);
-
-        dropdown.addEventListener('load', function() {
-          var deckNames = JSON.parse(dropdown.responseText);
-          var username = deckNames[0];
-          var decks = deckNames[1];
-
-          var myDropDown = 'deck-dropdown';
-          var myItems = 'deck-dropdown-items';
-
-          loadDropDown(username, decks, myDropDown, myItems);
-          saveButton.removeAttribute('disabled');
-          resetNewDeck();
-          $('#myModal-new-deck').modal('hide');
-
-          var theDropDown = document.getElementById('deck-dropdown-items');
-          var count = {numcards: theDropDown.children.length};
-          console.log(count)
-          updateProfile(count);
-
-          var profileDeck = {id: theDropDown.children.length, username: username, deckname: deckname, numcards: cards.length, description: description, createdon: createdon};
-          newProfileDeck(profileDeck);
-
-        });
-      };
-    });
-  };
 });
 
 var login = document.getElementById('btn-login');
@@ -1143,7 +1184,6 @@ function addNewCard(content) {
     table.appendChild(tbody);
   }
 
-  console.log(content.length);
   console.log(content);
 
   var id = document.createElement('td');
@@ -1166,7 +1206,7 @@ function addNewCard(content) {
   var link = document.createElement('a');
   link.setAttribute('href', '#');
   link.setAttribute('data-id', 'new-deck-card-remove');
-  link.setAttribute('data-value', 'remove new car-' + content.id);
+  link.setAttribute('data-value', 'remove new card-' + content.id);
   link.textContent = 'remove';
 
   var remove = document.createElement('td');
@@ -1184,6 +1224,9 @@ function addNewCard(content) {
 }
 
 function newProfileDeck(content) {
+  console.log('newProfileDeck data: ');
+  console.log(content);
+
   var table = document.getElementById('user-profile-deck-table');
 
   var id = document.createElement('td');
@@ -1256,4 +1299,16 @@ function resetNewDeck() {
   if(tbody != null) {
     table.removeChild(tbody);
   }
+}
+
+function resetNewCard() {
+  var word = document.getElementById('modal-new-deck-card-word');
+  var pronunciation = document.getElementById('modal-new-deck-card-pronunciation');
+  var meaning = document.getElementById('modal-new-deck-card-meaning');
+  var type = document.getElementById('modal-new-deck-card-type');
+
+  word.value = '';
+  pronunciation.value = '';
+  meaning.value = '';
+  type.value = '';
 }
