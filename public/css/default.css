@@ -14,9 +14,33 @@
   height: 150px;
 }
 
-.home-body-image {
-  height: 280px;
-  width: 280px;
+#panel-heading-review-card, #panel-body-review-card, #panel-heading-new-deck, #panel-heading-new-deck-card, #panel-heading-new-deck-table, #panel-heading-search {
+  text-align: center;
+}
+
+#panel-body-review-card {
+  align-content: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  font-size: 50px;
+}
+
+#review-card-span {
+  font-size: 15px;
+}
+
+#new-deck-table {
+  height: 100px;
+  overflow: scroll;
+}
+
+#home-description-text {
+  color: white;
+}
+
+#carousel-example-generic {
+  width: 60%;
+  height: 60%;
 }
 
 .profile-picture-thumbnail {
@@ -38,27 +62,15 @@
   margin-right: 10px;
 }
 
-#panel-heading-review-card, #panel-body-review-card, #panel-heading-new-deck, #panel-heading-new-deck-card, #panel-heading-new-deck-table, #panel-heading-search {
-  text-align: center;
+.link-text-white {
+  color: white;
 }
 
-#panel-body-review-card {
-  align-content: center;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  font-size: 50px;
+.carousel-indicator-color {
+  color: blue;
 }
 
-#review-card-span {
-  font-size: 15px;
-}
-
-#new-deck-table {
-  height: 100px;
-  overflow: scroll;
-}
-
-/*Onle Used For Testing. Will Remove Once Project Is Complete.*/
-.border {
-  border: 1px solid red;
+.home-body-image {
+  width: 25%;
+  height: 25%;
 }

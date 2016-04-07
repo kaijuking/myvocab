@@ -325,9 +325,23 @@ app.post('/newDeck', jsonParser, function(req, res) {
   res.send(username);
 });
 
-// app.listen(8080, function() {
-//   console.log('Project #2: MyVocab');
-// });
+app.post('/logout', jsonParser, function(req, res) {
+  var doLogout = req.body.logout;
+  console.log(doLogout);
+
+  if(doLogout === true) {
+    res.clearCookie('myvocabRemember');
+    activeUser = '';
+    var result = true;
+  };
+
+  if(result != false) {
+    res.json(result);
+  } else {
+    res.json(result);
+  };
+
+});
 
 var port = process.env.PORT || 1337;
 app.listen(port, function() {

@@ -1,6 +1,6 @@
 'use-strict';
 
-//Used In One Or More 'click' Event Listeners 
+//Used In One Or More 'click' Event Listeners
 var reviewCards;
 var startIndex = 0;
 var currentIndex = 0;
@@ -9,6 +9,11 @@ var theCards = [];
 
 document.addEventListener('DOMContentLoaded', function(event){
   console.log('DOM has fully loaded and parsed.');
+  console.log('reviewCards is: ' + reviewCards);
+  console.log('startIndex is: ' + startIndex);
+  console.log('currentIndex is: ' + currentIndex);
+  console.log('theId is: ' + theId);
+  console.log(theCards)
 
   var session = new XMLHttpRequest();
   session.open('GET', '/session', true);
@@ -20,11 +25,14 @@ document.addEventListener('DOMContentLoaded', function(event){
     if(username === 'false') {
       var loginPage = document.getElementById('login-page');
       var homePage = document.getElementById('home-page');
+
       loginPage.setAttribute('class', 'show');
       homePage.setAttribute('class', 'hide');
+
     } else {
       var loginPage = document.getElementById('login-page');
       var homePage = document.getElementById('home-page');
+
       loginPage.setAttribute('class', 'hide');
       homePage.setAttribute('class', 'show');
 
@@ -735,6 +743,42 @@ document.addEventListener('click', function(event) {
       theCards[i].id = i + 1;
     }
   }
+
+  if(theTarget.getAttribute('data-id') === 'logout') {
+    var logout = true;
+    var theData = {logout: logout};
+    var data = JSON.stringify(theData);
+
+    var tryLogout = new XMLHttpRequest();
+    tryLogout.open('POST', '/logout', true);
+    tryLogout.setRequestHeader('Content-Type', 'application/json');
+    tryLogout.send(data);
+
+    tryLogout.addEventListener('load', function() {
+      var response = JSON.parse(tryLogout.responseText);
+
+      if(response != false) {
+        var loginPage = document.getElementById('login-page');
+        var homePage = document.getElementById('home-page');
+
+        loginPage.setAttribute('class', 'show');
+        homePage.setAttribute('class', 'hide');
+
+        resetNewDeck();
+        resetNewCard();
+
+        var usernameField = document.getElementById('login-username');
+        var passwordField = document.getElementById('login-password');
+
+        usernameField.value = '';
+        passwordField.value = '';
+
+        console.log('you have logged out');
+      } else {
+        console.log('ERROR: Logout was unsuccessfull');
+      };
+    });
+  };
 
 });
 

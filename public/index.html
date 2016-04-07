@@ -13,25 +13,20 @@
         <div class='container' id='div-login'>
           <div class='row'>
             <div class='col-md-6 col-md-offset-6 col-sm-12 col-xs-6'>
-              <form class="form-inline" method='post' id='form-login'>
+              <form class="form-inline" action='' method='post' id='form-login'>
                 <div class="form-group">
                   <label class="sr-only" for="login-username">Username</label>
-                  <input type="text" class="form-control" id="login-username" placeholder="Username">
+                  <input type="text" class="form-control" id="login-username" placeholder="kaijuking">
                 </div>
                 <div class="form-group">
                   <label class="sr-only" for="login-password">Password</label>
-                  <input type="password" class="form-control" id="login-password" placeholder="Password">
+                  <input type="password" class="form-control" id="login-password" placeholder="12345">
                 </div>
                 <button type="button" id='btn-login' class="btn btn-default">Sign in</button>
               </form>
               <form class='form-inline'>
-                <div class="form-group checkbox">
-                  <label>
-                    <input type="checkbox"> Remember Me
-                  </label>
-                </div>
                 <div class='form-group'>
-                  <a href='#'>Create An Account</a>
+                  <a href='#' class='link-text-white' id='link-create-account'>Create An Account</a>
                 </div>
               </form>
             </div>
@@ -40,10 +35,11 @@
         <div class='container'>
           <div class="page-header">
             <h1>Welcome to MyVocab!</h1>
-            <h3>An online learning center where you can create and share your own flash cards!<h3>
+            <h3><span id='home-description-text'>An online learning center where you can create and study your own flash cards!</span></h3>
           </div>
         </div>
       </div>
+      <hr>
       <div class='container' id='home-body'>
         <div class='row'>
           <div class='col-md-12'>
@@ -99,7 +95,6 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <!-- <img class="navbar-brand-image" src='./public/images/osakaflu.jpg' alt='...'> -->
                 <a class="navbar-brand" href="#">My Vocab</a>
               </div>
               <div id="navbar" class="navbar-collapse collapse">
@@ -110,8 +105,8 @@
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="#">Account Settings</a></li>
-                      <li><a href="#">Logout</a></li>
+                      <li><a href="#" data-id='account-settings'>Account Settings</a></li>
+                      <li><a href="#" data-id='logout'>Logout</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -132,7 +127,6 @@
                   <li role="presentation" id='tab-user-mycards'><a href="#user-mycards" data-id='user-mycards' aria-controls="user-mycards" role="tab" data-toggle="tab">My Cards</a></li>
                   <li role="presentation" id='tab-user-search'><a href="#user-search" data-id='user-search' aria-controls="user-search" role="tab" data-toggle="tab">Search</a></li>
                 </ul>
-
                 <!-- Tab panes -->
                 <div class="tab-content">
                   <div role="tabpanel" class="tab-pane active" id="user-profile">
@@ -209,7 +203,6 @@
                                               <label for="modal-edit-deck-username">Username: </label><span id='modal-edit-deck-username'></span>
                                             </div>
                                           </div>
-
                                           <div class='row'>
                                             <div class='col-md-3'>
                                               <label for="modal-edit-deck-deckname">Deck Name: </label>
@@ -220,7 +213,6 @@
                                               <input type="text" class="form-control" placeholder="Deck Name" aria-describedby="basic-addon1" id='modal-edit-deck-deckname'>
                                             </div>
                                           </div>
-
                                           <div class='row'>
                                             <div class='col-md-3'>
                                               <label class='span-space' for="modal-edit-deck-source">Source: </label>
@@ -231,7 +223,6 @@
                                               <input type="text" class="form-control" placeholder="Source" aria-describedby="basic-addon1" id='modal-edit-deck-source'>
                                             </div>
                                           </div>
-
                                           <div class='row'>
                                             <div class='col-md-3'>
                                               <label class='span-space' for="modal-edit-deck-publisher">Publisher: </label>
@@ -242,7 +233,6 @@
                                               <input type="text" class="form-control" placeholder="Publisher" aria-describedby="basic-addon1" id='modal-edit-deck-publisher'>
                                             </div>
                                           </div>
-
                                           <div class='row'>
                                             <div class='col-md-3'>
                                               <label class='span-space' for="modal-edit-deck-isbn">ISBN: </label>
@@ -253,7 +243,6 @@
                                               <input type="text" class="form-control" placeholder="ISBN" aria-describedby="basic-addon1" id='modal-edit-deck-isbn'>
                                             </div>
                                           </div>
-
                                           <div class='row'>
                                             <div class='col-md-3'>
                                               <label class='span-space' for="modal-edit-deck-isbn">Description: </label>
@@ -264,7 +253,6 @@
                                               <textarea class="form-control" id='modal-edit-deck-description' placeholder="Description" rows="3"></textarea>
                                             </div>
                                           </div>
-
                                         </div>
                                       </div>
                                     </div>
@@ -276,7 +264,6 @@
                                 </div>
                               </div>
                             </div>
-
                             <!-- Modal -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                               <div class="modal-dialog" role="document">
@@ -302,7 +289,6 @@
                                               <label for="modal-card-id">ID: </label><span id='modal-card-id'></span>
                                             </div>
                                           </div>
-
                                           <div class='row'>
                                             <div class='col-md-3'>
                                               <label class='span-space' for="card-word">Word: </label>
@@ -313,7 +299,6 @@
                                               <input type="text" class="form-control" placeholder="word" aria-describedby="basic-addon1" id='modal-card-word'>
                                             </div>
                                           </div>
-
                                           <div class='row'>
                                             <div class='col-md-3'>
                                               <label class='span-space' for="card-pronunciation">Pronunciation: </label>
@@ -324,7 +309,6 @@
                                               <input type="text" class="form-control" placeholder="pronunciation" aria-describedby="basic-addon1" id='modal-card-pronunciation'>
                                             </div>
                                           </div>
-
                                           <div class='row'>
                                             <div class='col-md-3'>
                                               <label class='span-space' for="card-meaning">Meaning: </label>
@@ -335,7 +319,6 @@
                                               <input type="text" class="form-control" placeholder="meaning" aria-describedby="basic-addon1" id='modal-card-meaning'>
                                             </div>
                                           </div>
-
                                           <div class='row'>
                                             <div class='col-md-3'>
                                               <label class='span-space' for="card-type">Type: </label>
@@ -357,7 +340,6 @@
                                 </div>
                               </div>
                             </div>
-
                             <!-- Modal -->
                             <div class="modal fade" id="myModal-new-deck" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                               <div class="modal-dialog" role="document">
@@ -418,7 +400,6 @@
                                         </div>
                                       </div>
                                     </div>
-
                                     <div class="panel panel-primary">
                                       <div class="panel-heading" id='panel-heading-new-deck-card'>Add Cards To Your Deck</div>
                                       <div class="panel-body">
@@ -452,7 +433,6 @@
                                         </div>
                                       </div>
                                     </div>
-
                                     <div class='panel panel-primary'>
                                       <div class='panel-heading' id='panel-heading-new-deck-table'>New Cards</div>
                                       <div class='panel-body'>
@@ -474,7 +454,6 @@
                                         </div>
                                       </div>
                                     </div>
-
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" id='modal-new-deck-btn-cancel' data-id='modal-new-deck-btn-cancel'>Close</button>
@@ -483,7 +462,6 @@
                                 </div>
                               </div>
                             </div>
-
                           </div>
                         </div>
                         <div class="media">
@@ -554,7 +532,6 @@
                     </div>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="user-mycards">
-
                     <div class='panel panel-default'>
                       <div class='panel-body'>
                         <div class='form-inline' id='mycards-form'>
