@@ -780,6 +780,16 @@ document.addEventListener('click', function(event) {
     });
   };
 
+  if(theTarget.getAttribute('data-id') === 'radio-btn') {
+    var dataValue = theTarget.getAttribute('data-value');
+
+    if(dataValue === 'r1') {
+      console.log('a;sdkfa;lskdfj')
+      $('#optionsRadios1').prop('checked');
+    }
+
+  }
+
 });
 
 var login = document.getElementById('btn-login');

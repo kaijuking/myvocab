@@ -343,6 +343,30 @@ app.post('/logout', jsonParser, function(req, res) {
 
 });
 
+app.post('/bookSearch', jsonParser, function(req,res) {
+  var title = req.body.title;
+  var apiKey = 'AIzaSyCST9ncJG5QX84gOwpFJe_qMO5NMXPfQCw'
+
+  var theURL = 'https://www.googleapis.com/books/v1/volumes?q=intitle:' + title + '&key=' + apiKey;
+
+  var p1 = new Promise(function(resolve, reject) {
+    request(theURL, function(error, response, body) {
+      if(!error && response.statusCode == 200) {
+       resolve(response);
+     }
+    })
+  })
+
+  Promise.all([p1]).then(function(value) {
+    console.log(value);
+    res.json(value);
+  }, function(reason) {
+    console.log(reason)
+ });
+
+})
+
+
 var port = process.env.PORT || 1337;
 app.listen(port, function() {
  console.log("Project #2 (MyVocab) is listening on port " + port);
