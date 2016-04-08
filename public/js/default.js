@@ -8,13 +8,6 @@ var theId = 1;
 var theCards = [];
 
 document.addEventListener('DOMContentLoaded', function(event){
-  console.log('DOM has fully loaded and parsed.');
-  console.log('reviewCards is: ' + reviewCards);
-  console.log('startIndex is: ' + startIndex);
-  console.log('currentIndex is: ' + currentIndex);
-  console.log('theId is: ' + theId);
-  console.log(theCards)
-
   var session = new XMLHttpRequest();
   session.open('GET', '/session', true);
   session.send();
@@ -58,8 +51,6 @@ document.addEventListener('DOMContentLoaded', function(event){
 });
 
 document.addEventListener('click', function(event) {
-  //event.preventDefault();
-
   var theTarget = event.target;
 
   /*Target Events For The Tabs: Profile, My Decks, My Cards and Search*/
@@ -300,7 +291,6 @@ document.addEventListener('click', function(event) {
   if(theTarget.getAttribute('data-id') === 'deck-card-edit') {
     var dataValue = theTarget.getAttribute('data-value');
     var stringArray = dataValue.split('-',3);
-    console.log(stringArray);
 
     var theUsername = stringArray[0];
     var theDeckname = stringArray[1];
@@ -340,8 +330,6 @@ document.addEventListener('click', function(event) {
 
     var deck = document.getElementById('table-deck');
     var children = deck.childNodes;
-    //children[4].childNodes[0] === table row 0 (i.e. card #1)
-    //children[4].childNodes[0].childNodes[1] === tabe row 0, column #2 (i.e. Word)
 
     var userName = document.getElementById('modal-username-card');
     var deckName = document.getElementById('modal-deckname-card');
@@ -462,8 +450,6 @@ document.addEventListener('click', function(event) {
       var response = JSON.parse(xhr.responseText);
 
       if(response != false) {
-        console.log(response);
-
         var modifiedDate = new Date(response);
         var modified = document.getElementById('deck-modifiedon');
         modified.textContent = (modifiedDate.getMonth() + 1) + '/' + modifiedDate.getUTCDate() + '/' + modifiedDate.getFullYear();
@@ -504,8 +490,6 @@ document.addEventListener('click', function(event) {
 
     xhr.addEventListener('load', function() {
       var response = JSON.parse(xhr.responseText);
-      console.log(response[0]);
-      console.log(response);
 
       var table1 = document.getElementById('table-search');
       var table2 = document.getElementById('table-search-raw');
@@ -542,11 +526,6 @@ document.addEventListener('click', function(event) {
       }
 
       var lines = testText.split('\n');
-
-      for(var i = 1; i < lines.length; i++) {
-        console.log(lines[i]);
-      }
-
       var table1 = document.getElementById('table-search');
       var table2 = document.getElementById('table-search-raw');
 
@@ -583,11 +562,6 @@ document.addEventListener('click', function(event) {
       }
 
       var lines = testText.split('\n');
-
-      for(var i = 1; i < lines.length; i++) {
-        console.log(lines[i]);
-      }
-
       var table1 = document.getElementById('table-search');
       var table2 = document.getElementById('table-search-raw');
 
@@ -642,7 +616,6 @@ document.addEventListener('click', function(event) {
   if(theTarget.getAttribute('data-id') === 'modal-new-deck-btn-save') {
 
     var saveButton = document.getElementById('modal-new-deck-btn-save');
-
     var username = document.getElementById('modal-new-deck-username').textContent;
     var deckname = document.getElementById('modal-new-deck-deckname').value;
     var publisher = document.getElementById('modal-new-deck-publisher').value;
@@ -703,7 +676,6 @@ document.addEventListener('click', function(event) {
 
             var theDropDown = document.getElementById('deck-dropdown-items');
             var count = {numcards: theDropDown.children.length};
-            console.log(count)
             updateProfile(count);
 
             var profileDeck = {id: theDropDown.children.length, username: username, deckname: deckname, numcards: cards.length, description: description, createdon: createdon};
@@ -775,7 +747,6 @@ document.addEventListener('click', function(event) {
         usernameField.value = '';
         passwordField.value = '';
 
-        console.log('you have logged out');
       } else {
         console.log('ERROR: Logout was unsuccessfull');
       };
@@ -786,7 +757,6 @@ document.addEventListener('click', function(event) {
     var dataValue = theTarget.getAttribute('data-value');
 
     if(dataValue === 'japaneasy') {
-      console.log('Radio Button japaneasy clicked');
       var table1 = document.getElementById('table-search');
       var table2 = document.getElementById('table-search-raw');
       var div = document.getElementById('book-search');
@@ -797,7 +767,6 @@ document.addEventListener('click', function(event) {
     }
 
     if(dataValue === 'wwwjdic-english') {
-      console.log('Radio Button wwwjdic-english clicked');
       var table1 = document.getElementById('table-search');
       var table2 = document.getElementById('table-search-raw');
       var div = document.getElementById('book-search');
@@ -808,7 +777,6 @@ document.addEventListener('click', function(event) {
     }
 
     if(dataValue === 'wwwjdic-japanese') {
-      console.log('Radio Button wwwjdic-japanese clicked');
       var table1 = document.getElementById('table-search');
       var table2 = document.getElementById('table-search-raw');
       var div = document.getElementById('book-search');
@@ -819,7 +787,6 @@ document.addEventListener('click', function(event) {
     }
 
     if(dataValue === 'book-search') {
-      console.log('Radio Button wwwjdic-japanese clicked');
       var table1 = document.getElementById('table-search');
       var table2 = document.getElementById('table-search-raw');
       var div = document.getElementById('book-search');
@@ -834,22 +801,13 @@ document.addEventListener('click', function(event) {
     var dataId = theTarget.getAttribute('data-id');
     var searchTerm = document.getElementById('search-input').value;
     var searchType = radioButton(dataId);
-
-    console.log(searchTerm);
-    console.log(searchType);
-
     wordSearch(searchTerm, searchType);
-
   }
 
   if(theTarget.getAttribute('data-id') === 'book-search-btn') {
     var dataId = theTarget.getAttribute('data-id');
     var searchTerm = document.getElementById('book-search-input').value;
     var searchType = radioButton(dataId);
-
-    console.log(searchTerm);
-    console.log(searchType);
-
     bookSearch(searchTerm, searchType);
   }
 
@@ -965,8 +923,10 @@ function loadProfile(info) {
       homePage.setAttribute('class', 'show');
     });
 
-    Promise.all([p1, p2, p3]).then(function(value) {
+    Promise.all([p1, p2]).then(function(value) {
       console.log(value);
+      loginPage.setAttribute('class', 'hide');
+      homePage.setAttribute('class', 'show');
     }, function(reason) {
       console.log(reason);
     });
@@ -1266,7 +1226,6 @@ function jimBreen(content) {
   for(var i = 0; i < word.length; i++) {
 
     var stringArray = word[i][0].split(' ', 2);
-    console.log(stringArray);
 
     if(stringArray[1] != null) {
       var pronunciation = stringArray[1].slice(1, -1);
@@ -1303,8 +1262,6 @@ function addNewCard(content) {
     tbody.setAttribute('id', 'new-deck-card-tbody');
     table.appendChild(tbody);
   }
-
-  console.log(content);
 
   var id = document.createElement('td');
   id.setAttribute('data-id', content.id);
@@ -1344,9 +1301,6 @@ function addNewCard(content) {
 }
 
 function newProfileDeck(content) {
-  console.log('newProfileDeck data: ');
-  console.log(content);
-
   var table = document.getElementById('user-profile-deck-table');
 
   var id = document.createElement('td');
@@ -1441,7 +1395,6 @@ function wordSearch(searchTerm, searchType) {
   }
 
   var searchData = JSON.stringify(data);
-  console.log(searchData);
 
   var xhr = new XMLHttpRequest();
   xhr.open('POST', '/wordSearch', true);
@@ -1460,11 +1413,6 @@ function wordSearch(searchTerm, searchType) {
       }
 
       var lines = testText.split('\n');
-
-      for(var i = 1; i < lines.length; i++) {
-        console.log(lines[i]);
-      }
-
       var table1 = document.getElementById('table-search');
       var table2 = document.getElementById('table-search-raw');
 
@@ -1580,6 +1528,30 @@ function bookResults(content) {
       mediaBody.appendChild(bSubtitle);
       mediaBody.appendChild(spanSubtitle);
       mediaBody.appendChild(subtitleBreak);
+    }
+
+    if(theItems.items[i].volumeInfo.authors) {
+      var bAuthors = document.createElement('b');
+      var spanAuthors = document.createElement('span');
+      var authorsBreak = document.createElement('br');
+      bAuthors.textContent = 'Authors: ';
+
+      for(var n = 0; n < theItems.items[i].volumeInfo.authors.length; n++) {
+        spanAuthors.textContent = theItems.items[i].volumeInfo.authors[n]; + ' ' + spanAuthors.textContent;
+      }
+
+      mediaBody.appendChild(bAuthors);
+      mediaBody.appendChild(spanAuthors);
+      mediaBody.appendChild(authorsBreak);
+    } else {
+      var bAuthors = document.createElement('b');
+      var spanAuthors = document.createElement('span');
+      var authorsBreak = document.createElement('br');
+      bAuthors.textContent = 'Authors: ';
+      spanAuthors.textContent = 'N/A';
+      mediaBody.appendChild(bAuthors);
+      mediaBody.appendChild(spanAuthors);
+      mediaBody.appendChild(authorsBreak);
     }
 
     if(theItems.items[i].volumeInfo.publisher) {

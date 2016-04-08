@@ -14,6 +14,14 @@
   height: 150px;
 }
 
+/*#home-body {
+  background-color: #73BDE4;
+}*/
+
+#login-page {
+  background-color: #73BDE4;
+}
+
 #panel-heading-review-card, #panel-body-review-card, #panel-heading-new-deck, #panel-heading-new-deck-card, #panel-heading-new-deck-table, #panel-heading-search, #panel-heading-book {
   text-align: center;
 }
@@ -73,4 +81,22 @@
 .home-body-image {
   width: 25%;
   height: 25%;
+}
+
+.hr-home {
+  width: 75%;
+  height: 1px;
+  color: black;
+  background-color: black;
+  border: none;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.hr-hero {
+  width: 85%;
+}
+
+.myvocab-intro {
+  color: white;
 }

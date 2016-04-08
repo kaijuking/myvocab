@@ -4,8 +4,10 @@ var path = require('path');
 var jsonParser = require('body-parser').json();
 var cookieParser = require('cookie-parser');
 var request = require('request');
-var Dictionary = require('japaneasy');
 var app = express();
+
+/*This Is Needed And Used For The NPM Module 'japaneasy'*/
+var Dictionary = require('japaneasy');
 var dict = new Dictionary();
 
 /*Required Data Objects*/
@@ -15,6 +17,23 @@ var allDecks = require('./decks.js');
 /*Used To Determine Which User Is Logged In*/
 var activeUser;
 
+/*Used When Creating A New Deck*/
+function Deck(username, id, deckname, source, sourceimage, isbn, publisher, numcards, description, createdon, lastmodified, cards){
+  this.username = username;
+  this.id = id;
+  this.deckname = deckname;
+  this.source = source;
+  this.sourceimage = sourceimage; //'test.png'
+  this.isbn = isbn;
+  this.publisher = publisher;
+  this.numcards = numcards;
+  this.description = description;
+  this.createdon = createdon;
+  this.lastmodified = lastmodified;
+  this.cards = cards; //cards is an Array of cards
+}
+
+/*Middleware To Use*/
 var defaultMiddleware = express.static('./public');
 app.use(defaultMiddleware);
 app.use(cookieParser());
@@ -23,7 +42,6 @@ app.use(cookieParser());
 app.post('/login', jsonParser, function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
-
   var result = false;
 
   for(var i = 0; i < allUsers.length; i++) {
@@ -41,8 +59,26 @@ app.post('/login', jsonParser, function(req, res) {
   }
 });
 
+/*Used When User Logs Out. This Will Clear The Saved Cookie*/
+app.post('/logout', jsonParser, function(req, res) {
+  var doLogout = req.body.logout;
+
+  if(doLogout === true) {
+    res.clearCookie('myvocabRemember');
+    activeUser = '';
+    var result = true;
+  };
+
+  if(result != false) {
+    res.json(result);
+  } else {
+    res.json(result);
+  };
+
+});
+
+/*Used To Get The Value Of The 'activeUser' Variable*/
 app.get('/activeUser', function(req, res) {
-  console.log('route activeUser was called');
   if(activeUser != null) {
     res.send(activeUser);
   } else {
@@ -135,6 +171,7 @@ app.post('/loadDeck', jsonParser, function(req, res) {
   }
 });
 
+/*Used To Retrieve A Single Deck*/
 app.post('/singleDeck', jsonParser, function(req, res) {
   var username = req.body.username;
   var deckname = req.body.deckname;
@@ -156,6 +193,7 @@ app.post('/singleDeck', jsonParser, function(req, res) {
   }
 });
 
+/*Used To Edit An Individual Card Of A Particular Deck*/
 app.post('/editCard', jsonParser, function(req, res) {
   var username = req.body.username;
   var deckname = req.body.deckname;
@@ -189,9 +227,8 @@ app.post('/editCard', jsonParser, function(req, res) {
 
 });
 
+/*Used To Edit A Particular Deck*/
 app.post('/editDeck', jsonParser, function(req, res) {
-  console.log(req.body);
-
   var username = req.body.username;
   var deckId = req.body.deckId;
   var originalDeckname = req.body.originalDeckname;
@@ -226,78 +263,7 @@ app.post('/editDeck', jsonParser, function(req, res) {
 
 });
 
-app.post('/search', jsonParser, function(req, res) {
-
-  /*Search By English Word Only Using Japaneasy*/
-  var word = req.body.search;
-  dict(word).then(function(result) {
-    console.log(result);
-    res.send(result);
-  });
-
-})
-
-app.post('/wwwjdicEnglish', jsonParser, function(req, res) {
-  var term = req.body.search;
-
-  var theURL = 'http://nihongo.monash.edu/cgi-bin/wwwjdic?1ZUE' + term;
-
-  var p1 = new Promise(function(resolve, reject) {
-    request(theURL, function(error, response, body) {
-      if(!error && response.statusCode == 200) {
-       resolve(response);
-     }
-    })
-  })
-
-  Promise.all([p1]).then(function(value) {
-    console.log(value);
-     res.json(value);
-  }, function(reason) {
-    console.log(reason)
- });
-
-})
-
-app.post('/wwwjdicJapanese', jsonParser, function(req, res) {
-  var term = req.body.search;
-  var theTerm = encodeURIComponent(term);
-
-  //1 = EDICT, Z = backdoor entry (raw dictionary display), U = where the lookup text is in UTF-8, J = for Japanese keys
-  var theURL = 'http://nihongo.monash.edu/cgi-bin/wwwjdic?1ZUJ' + theTerm;
-
-  var p1 = new Promise(function(resolve, reject) {
-    request(theURL, function(error, response, body) {
-      if(!error && response.statusCode == 200) {
-       resolve(response);
-     }
-    })
-  })
-
-  Promise.all([p1]).then(function(value) {
-    console.log(value);
-    res.json(value);
-  }, function(reason) {
-    console.log(reason)
- });
-
-});
-
-function Deck(username, id, deckname, source, sourceimage, isbn, publisher, numcards, description, createdon, lastmodified, cards){
-  this.username = username;
-  this.id = id;
-  this.deckname = deckname;
-  this.source = source;
-  this.sourceimage = sourceimage; //'test.png'
-  this.isbn = isbn;
-  this.publisher = publisher;
-  this.numcards = numcards;
-  this.description = description;
-  this.createdon = createdon;
-  this.lastmodified = lastmodified;
-  this.cards = cards; //cards is an Array of cards
-}
-
+/*Used When Creating A New Deck*/
 app.post('/newDeck', jsonParser, function(req, res) {
 
   var username = req.body.username;
@@ -314,7 +280,6 @@ app.post('/newDeck', jsonParser, function(req, res) {
 
   var newDeck = new Deck(username, deckId, deckname, source, 'default2.jpg', isbn, publisher, numCards, description, createdOn, lastModified, cards);
   allDecks.push(newDeck);
-  console.log(allDecks);
 
   for(var i = 0; i < allUsers.length; i++) {
     if(allUsers[i].username === username) {
@@ -325,30 +290,65 @@ app.post('/newDeck', jsonParser, function(req, res) {
   res.send(username);
 });
 
-app.post('/logout', jsonParser, function(req, res) {
-  var doLogout = req.body.logout;
-  console.log(doLogout);
+/*Search By English Word Only Using Japaneasy*/
+app.post('/search', jsonParser, function(req, res) {
+  var word = req.body.search;
+  dict(word).then(function(result) {
+    console.log(result);
+    res.send(result);
+  });
+})
 
-  if(doLogout === true) {
-    res.clearCookie('myvocabRemember');
-    activeUser = '';
-    var result = true;
-  };
+/*Search By English Word Only Using 'wwwjdic (English)'*/
+app.post('/wwwjdicEnglish', jsonParser, function(req, res) {
+  var term = req.body.search;
+  var theURL = 'http://nihongo.monash.edu/cgi-bin/wwwjdic?1ZUE' + term;
 
-  if(result != false) {
-    res.json(result);
-  } else {
-    res.json(result);
-  };
+  var p1 = new Promise(function(resolve, reject) {
+    request(theURL, function(error, response, body) {
+      if(!error && response.statusCode == 200) {
+       resolve(response);
+     }
+    })
+  })
 
+  Promise.all([p1]).then(function(value) {
+     res.json(value);
+  }, function(reason) {
+    console.log(reason)
+ });
+
+})
+
+/*Search By Japanese Word Only Using 'wwwjdic (Japanese)'*/
+app.post('/wwwjdicJapanese', jsonParser, function(req, res) {
+  var term = req.body.search;
+  var theTerm = encodeURIComponent(term);
+
+  //1 = EDICT, Z = backdoor entry (raw dictionary display), U = where the lookup text is in UTF-8, J = for Japanese keys
+  var theURL = 'http://nihongo.monash.edu/cgi-bin/wwwjdic?1ZUJ' + theTerm;
+
+  var p1 = new Promise(function(resolve, reject) {
+    request(theURL, function(error, response, body) {
+      if(!error && response.statusCode == 200) {
+       resolve(response);
+     }
+    })
+  })
+
+  Promise.all([p1]).then(function(value) {
+    res.json(value);
+  }, function(reason) {
+    console.log(reason)
+ });
 });
 
+/*Used When Looking Up Books. This Uses Google's Book API*/
 app.post('/bookSearch', jsonParser, function(req,res) {
   var term = req.body.term;
   var type = req.body.type;
 
   var apiKey = 'AIzaSyCST9ncJG5QX84gOwpFJe_qMO5NMXPfQCw';
-
   var theURL = 'https://www.googleapis.com/books/v1/volumes?q=' + type + ':' + term + '&key=' + apiKey;
 
   var p1 = new Promise(function(resolve, reject) {
@@ -360,7 +360,6 @@ app.post('/bookSearch', jsonParser, function(req,res) {
   })
 
   Promise.all([p1]).then(function(value) {
-    console.log(value);
     res.json(value);
   }, function(reason) {
     console.log(reason)
@@ -368,18 +367,19 @@ app.post('/bookSearch', jsonParser, function(req,res) {
 
 });
 
+/*Used When Looking Up Words. This Is Used With The Radio Buttons On The Word Search Tab.*/
 app.post('/wordSearch', jsonParser, function(req, res) {
   var term = req.body.term;
   var type = req.body.type;
 
+  /*Search By English Word Only Using Japaneasy*/
   if(type === 'japaneasy') {
-    /*Search By English Word Only Using Japaneasy*/
     dict(term).then(function(result) {
-      console.log(result);
       res.send(result);
     });
   }
 
+  /*Search By English Word Only Using 'wwwjdic (English)'*/
   if(type === 'wwwjdic-english') {
     var theURL = 'http://nihongo.monash.edu/cgi-bin/wwwjdic?1ZUE' + term;
 
@@ -392,13 +392,13 @@ app.post('/wordSearch', jsonParser, function(req, res) {
     })
 
     Promise.all([p1]).then(function(value) {
-      console.log(value);
        res.json(value);
     }, function(reason) {
       console.log(reason)
    });
   }
 
+  /*Search By Japanese Word Only Using 'wwwjdic (Japanese)'*/
   if(type === 'wwwjdic-japanese') {
     var theTerm = encodeURIComponent(term);
 
@@ -414,15 +414,14 @@ app.post('/wordSearch', jsonParser, function(req, res) {
     })
 
     Promise.all([p1]).then(function(value) {
-      console.log(value);
       res.json(value);
     }, function(reason) {
       console.log(reason)
    });
   }
-
 });
 
+/*Configure Which Port To Listen For LocalHost*/
 var port = process.env.PORT || 1337;
 app.listen(port, function() {
  console.log("Project #2 (MyVocab) is listening on port " + port);
