@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function(event){
 });
 
 document.addEventListener('click', function(event) {
-  event.preventDefault();
+  //event.preventDefault();
 
   var theTarget = event.target;
 
@@ -506,11 +506,13 @@ document.addEventListener('click', function(event) {
       var response = JSON.parse(xhr.responseText);
       console.log(response[0]);
       console.log(response);
+
       var table1 = document.getElementById('table-search');
       var table2 = document.getElementById('table-search-raw');
 
       table1.setAttribute('class', 'table table-hover show');
       table2.setAttribute('class', 'table table-hover hide');
+
       searchResults(response);
     });
   }
@@ -783,11 +785,72 @@ document.addEventListener('click', function(event) {
   if(theTarget.getAttribute('data-id') === 'radio-btn') {
     var dataValue = theTarget.getAttribute('data-value');
 
-    if(dataValue === 'r1') {
-      console.log('a;sdkfa;lskdfj')
-      $('#optionsRadios1').prop('checked');
+    if(dataValue === 'japaneasy') {
+      console.log('Radio Button japaneasy clicked');
+      var table1 = document.getElementById('table-search');
+      var table2 = document.getElementById('table-search-raw');
+      var div = document.getElementById('book-search');
+
+      table1.setAttribute('class', 'table table-hover show');
+      table2.setAttribute('class', 'table table-hover hide');
+      div.setAttribute('class', 'container hide');
     }
 
+    if(dataValue === 'wwwjdic-english') {
+      console.log('Radio Button wwwjdic-english clicked');
+      var table1 = document.getElementById('table-search');
+      var table2 = document.getElementById('table-search-raw');
+      var div = document.getElementById('book-search');
+
+      table1.setAttribute('class', 'table table-hover hide');
+      table2.setAttribute('class', 'table table-hover show');
+      div.setAttribute('class', 'container hide');
+    }
+
+    if(dataValue === 'wwwjdic-japanese') {
+      console.log('Radio Button wwwjdic-japanese clicked');
+      var table1 = document.getElementById('table-search');
+      var table2 = document.getElementById('table-search-raw');
+      var div = document.getElementById('book-search');
+
+      table1.setAttribute('class', 'table table-hover hide');
+      table2.setAttribute('class', 'table table-hover show');
+      div.setAttribute('class', 'container hide');
+    }
+
+    if(dataValue === 'book-search') {
+      console.log('Radio Button wwwjdic-japanese clicked');
+      var table1 = document.getElementById('table-search');
+      var table2 = document.getElementById('table-search-raw');
+      var div = document.getElementById('book-search');
+
+      table1.setAttribute('class', 'table table-hover hide');
+      table2.setAttribute('class', 'table table-hover hide');
+      div.setAttribute('class', 'container show');
+    }
+  }
+
+  if(theTarget.getAttribute('data-id') === 'search-btn') {
+    var dataId = theTarget.getAttribute('data-id');
+    var searchTerm = document.getElementById('search-input').value;
+    var searchType = radioButton(dataId);
+
+    console.log(searchTerm);
+    console.log(searchType);
+
+    wordSearch(searchTerm, searchType);
+
+  }
+
+  if(theTarget.getAttribute('data-id') === 'book-search-btn') {
+    var dataId = theTarget.getAttribute('data-id');
+    var searchTerm = document.getElementById('book-search-input').value;
+    var searchType = radioButton(dataId);
+
+    console.log(searchTerm);
+    console.log(searchType);
+
+    bookSearch(searchTerm, searchType);
   }
 
 });
@@ -1118,38 +1181,41 @@ function loadCards(user, deckname, content) {
   }
 }
 
-function searchResults(content) {
-  var table = document.getElementById('table-search');
-  var tbody = document.getElementById('table-search-results');
+function searchResults(content, searchType) {
 
-  if(tbody != null) {
-    table.removeChild(tbody);
+  var tbodyResults = document.getElementById('table-search-results');
+  var tbodyRaw = document.getElementById('table-search-results-raw');
+
+  if(tbodyResults != null && searchType === 'japaneasy') {
+    var tableSearch = document.getElementById('table-search');
+    tableSearch.removeChild(tbodyResults);
+
     var tableBody = document.createElement('tbody');
     tableBody.setAttribute('id', 'table-search-results');
-    table.appendChild(tableBody);
+    tableSearch.appendChild(tableBody);
+
+    /*Populate The Table With The Search Results*/
+    for(var i = 0; i < content.length; i++) {
+      var japanese = document.createElement('td');
+      japanese.textContent = content[i].japanese;
+
+      var pronunciation = document.createElement('td');
+      pronunciation.textContent = content[i].pronunciation;
+
+      var english = document.createElement('td');
+      english.textContent = content[i].english;
+
+      var type = document.createElement('td');
+      type.textContent = content[i].pos;
+
+      var row = document.createElement('tr');
+      row.appendChild(japanese);
+      row.appendChild(pronunciation);
+      row.appendChild(english);
+      row.appendChild(type);
+      tableBody.appendChild(row);
+    };
   }
-
-  /*Populate The Table With The Search Results*/
-  for(var i = 0; i < content.length; i++) {
-    var japanese = document.createElement('td');
-    japanese.textContent = content[i].japanese;
-
-    var pronunciation = document.createElement('td');
-    pronunciation.textContent = content[i].pronunciation;
-
-    var english = document.createElement('td');
-    english.textContent = content[i].english;
-
-    var type = document.createElement('td');
-    type.textContent = content[i].pos;
-
-    var row = document.createElement('tr');
-    row.appendChild(japanese);
-    row.appendChild(pronunciation);
-    row.appendChild(english);
-    row.appendChild(type);
-    tableBody.appendChild(row);
-  };
 };
 
 function rawResults(content) {
@@ -1365,4 +1431,121 @@ function resetNewCard() {
   pronunciation.value = '';
   meaning.value = '';
   type.value = '';
+}
+
+function wordSearch(searchTerm, searchType) {
+
+  var data = {
+    term: searchTerm,
+    type: searchType
+  }
+
+  var searchData = JSON.stringify(data);
+  console.log(searchData);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/wordSearch', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(searchData);
+
+  xhr.addEventListener('load', function() {
+    var response = JSON.parse(xhr.responseText);
+
+    if(searchType != 'japaneasy') {
+      var theBody = response[0].body;
+      var testText = '';
+
+      for(var i = (theBody.indexOf('<pre>') + 5); i < theBody.lastIndexOf('</pre>'); i++) {
+        testText = testText + response[0].body[i];
+      }
+
+      var lines = testText.split('\n');
+
+      for(var i = 1; i < lines.length; i++) {
+        console.log(lines[i]);
+      }
+
+      var table1 = document.getElementById('table-search');
+      var table2 = document.getElementById('table-search-raw');
+
+      table1.setAttribute('class', 'table table-hover hide table-striped');
+      table2.setAttribute('class', 'table table-hover show table-striped');
+
+      jimBreen(lines);
+    } else {
+      searchResults(response, searchType);
+    }
+  });
+}
+
+function bookSearch(searchTerm, searchType) {
+
+  var data = {
+    term: searchTerm,
+    type: searchType
+  }
+
+  var searchData = JSON.stringify(data);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/bookSearch', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(searchData);
+
+  xhr.addEventListener('load', function() {
+    var response = JSON.parse(xhr.responseText);
+    bookResults(response);
+  });
+}
+
+function bookResults(content) {
+  var theItems = JSON.parse(content[0].body);
+  var length = theItems.items.length;
+  console.log(length);
+  console.log(theItems);
+
+  for(var i = 0; i < theItems.items.length; i++) {
+    // console.log(theItems.items[i]);
+    if(theItems.items[i].volumeInfo.imageLinks) {
+      console.log(theItems.items[i].volumeInfo.imageLinks.thumbnail);
+    }
+
+    console.log(theItems.items[i].volumeInfo.title);
+    console.log(theItems.items[i].volumeInfo.subtitle);
+    console.log(theItems.items[i].volumeInfo.publisher);
+    console.log(theItems.items[i].volumeInfo.publishedDate);
+    console.log(theItems.items[i].volumeInfo.industryIdentifiers);
+  }
+}
+
+function radioButton(dataId) {
+  if(dataId === 'search-btn') {
+    var form = document.getElementById('radio-form');
+    var length = form.elements.length;
+    var name = 'optionsRadios';
+    var radioButton = form.elements[name];
+    var result = [];
+
+    for(var i = 0; i < length; i++) {
+      if(radioButton[i].checked === true) {
+        result = radioButton[i].getAttribute('data-value');
+      }
+    }
+
+    return result;
+  } else {
+    var form = document.getElementById('radio-form-book');
+    var length = form.elements.length;
+    var name = 'bookRadios';
+    var radioButton = form.elements[name];
+    var result = [];
+
+    for(var i = 0; i < length; i++) {
+      if(radioButton[i].checked === true) {
+        result = radioButton[i].getAttribute('data-value');
+      }
+    }
+
+    return result;
+  }
 }

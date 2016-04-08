@@ -125,7 +125,8 @@
                   <li role="presentation" id='tab-user-profile' class="active"><a href="#user-profile" data-id='user-profile' aria-controls="home" role="tab" data-toggle="tab">Profile</a></li>
                   <li role="presentation" id='tab-user-mydecks'><a href="#user-mydecks" data-id='user-mydecks' aria-controls="user-mydecks" role="tab" data-toggle="tab">My Decks</a></li>
                   <li role="presentation" id='tab-user-mycards'><a href="#user-mycards" data-id='user-mycards' aria-controls="user-mycards" role="tab" data-toggle="tab">My Cards</a></li>
-                  <li role="presentation" id='tab-user-search'><a href="#user-search" data-id='user-search' aria-controls="user-search" role="tab" data-toggle="tab">Search</a></li>
+                  <li role="presentation" id='tab-user-search'><a href="#user-search" data-id='user-search' aria-controls="user-search" role="tab" data-toggle="tab">Word Search</a></li>
+                  <li role="presentation" id='tab-user-book'><a href="#user-book" data-id='user-book' aria-controls="user-book" role="tab" data-toggle="tab">Book Search</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
@@ -638,12 +639,46 @@
                             </ul>
                             <p>WWWJDIC results are courtesy of Jim Breen's website: <a href='http://www.edrdg.org/cgi-bin/wwwjdic/wwwjdic?1C'>wwwjdic</a></p>
                             <br>
-                            <input type="text" class="form-control" id='search-input' placeholder="Search for...">
-                            <div class="btn-group">
+                            <form id='radio-form' data-id='radio-form'>
+                              <div class="radio-inline">
+                                <label>
+                                  <input type="radio" name="optionsRadios" id="optionsRadios1" data-id='radio-btn' data-value='japaneasy'>
+                                  japaneasy
+                                </label>
+                              </div>
+                              <div class="radio-inline">
+                                <label>
+                                  <input type="radio" name="optionsRadios" id="optionsRadios2" data-id='radio-btn' data-value='wwwjdic-english'>
+                                  wwwjdic-english
+                                </label>
+                              </div>
+                              <div class="radio-inline">
+                                <label>
+                                  <input type="radio" name="optionsRadios" id="optionsRadios3" data-id='radio-btn' data-value='wwwjdic-japanese'>
+                                  wwwjdic-japanese
+                                </label>
+                              </div>
+                              <!-- <div class="radio-inline">
+                                <label>
+                                  <input type="radio" name="optionsRadios" id="optionsRadios4" data-id='radio-btn' data-value='book-search'>
+                                  Book Search
+                                </label>
+                              </div> -->
+                            </form>
+                            <!-- <div class="btn-group">
                               <button class="btn btn-default" id='btn-search' data-id='btn-search' data-value='btn-search' type="button" data-toggle="tooltip" data-placement="top" title="Can Only Lookup English Words..(for now)">Japaneasy</button>
                               <button class="btn btn-default" id='btn-search-raw-english' data-id='btn-search-raw-english' data-value='btn-search-raw-english' type="button">WWWJDIC (English)</button>
                               <button class="btn btn-default" id='btn-search-raw-japanese' data-id='btn-search-raw-japanese' data-value='btn-search-raw-japanese' type="button">WWWJDIC (Japanese)</button>
-                            </div>
+                            </div> -->
+                            <!-- <div class="btn-group">
+                              <button class="btn btn-default" id='search-btn' data-id='search-btn' data-value='search-btn' type="button">Search</button>
+                            </div> -->
+                            <div class="input-group">
+                              <input type="text" class="form-control" placeholder="Search for..." id='search-input'>
+                              <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" id='search-btn' data-id='search-btn'>Search</button>
+                              </span>
+                            </div><!-- /input-group -->
                           </div>
                         </div>
                         <hr>
@@ -674,6 +709,73 @@
                             </tbody>
                           </table>
                         </div>
+                        <div class='container hide' id='book-search'>
+                          <div class='container' id='book-search-results'>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="user-book">
+                    <div class='panel panel-primary'>
+                      <div class="panel-heading" id='panel-heading-book'>Search For Books</div>
+                      <div class='panel-body'>
+                        <div class="media">
+                          <div class="media-body well">
+                            <h2>How To Search</h2>
+                            <ul>
+                              <li><b>Step #1: </b> Select the search type</li>
+                                <ul>
+                                  <li>Title: Search by title</li>
+                                  <li>Author: Search by author</li>
+                                  <li>Publisher: Search by publisher</li>
+                                  <li>Subject: Search by subject (example: Japanese)</li>
+                                  <li>ISBN: Search by ISBN number</li>
+                                </ul>
+                              <li><b>Step #2: </b>Click the Search button</li>
+                            </ul>
+                            <p>Search results are based on the Google Books API.
+                            <br>
+                            <form id='radio-form-book' data-id='radio-form'>
+                              <div class="radio-inline">
+                                <label>
+                                  <input type="radio" name="bookRadios" id="bookRadios1" data-id='radio-btn' data-value='intitle'>
+                                  Title
+                                </label>
+                              </div>
+                              <div class="radio-inline">
+                                <label>
+                                  <input type="radio" name="bookRadios" id="bookRadios2" data-id='radio-btn' data-value='inauthor'>
+                                  Author
+                                </label>
+                              </div>
+                              <div class="radio-inline">
+                                <label>
+                                  <input type="radio" name="bookRadios" id="bookRadios3" data-id='radio-btn' data-value='inpublisher'>
+                                  Publisher
+                                </label>
+                              </div>
+                              <div class="radio-inline">
+                                <label>
+                                  <input type="radio" name="bookRadios" id="bookRadios4" data-id='radio-btn' data-value='subject'>
+                                  Subject
+                                </label>
+                              </div>
+                              <div class="radio-inline">
+                                <label>
+                                  <input type="radio" name="bookRadios" id="bookRadios5" data-id='radio-btn' data-value='isbn'>
+                                  ISBN
+                                </label>
+                              </div>
+                            </form>
+                            <div class="input-group">
+                              <input type="text" class="form-control" placeholder="Search for..." id='book-search-input'>
+                              <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" id='book-search-btn' data-id='book-search-btn'>Search</button>
+                              </span>
+                            </div><!-- /input-group -->
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -684,28 +786,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <form class='form-horizontal'>
-      <div class="radio">
-        <label>
-          <input type="radio" name="optionsRadios" id="optionsRadios1" data-id='radio-btn' data-value='r1' value="option1">
-          R1
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="optionsRadios" id="optionsRadios2" data-id='radio-btn' data-value='r2' value="option2">
-          R2
-        </label>
-      </div>
-      <div class="radio disabled">
-        <label>
-          <input type="radio" name="optionsRadios" id="optionsRadios3" data-id='radio-btn' data-value='r3' value="option3">
-          R3
-        </label>
-      </div>
-    </form> -->
-
     <script  src='js/default.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

@@ -281,7 +281,7 @@ app.post('/wwwjdicJapanese', jsonParser, function(req, res) {
     console.log(reason)
  });
 
-})
+});
 
 function Deck(username, id, deckname, source, sourceimage, isbn, publisher, numcards, description, createdon, lastmodified, cards){
   this.username = username;
@@ -344,10 +344,12 @@ app.post('/logout', jsonParser, function(req, res) {
 });
 
 app.post('/bookSearch', jsonParser, function(req,res) {
-  var title = req.body.title;
-  var apiKey = 'AIzaSyCST9ncJG5QX84gOwpFJe_qMO5NMXPfQCw'
+  var term = req.body.term;
+  var type = req.body.type;
 
-  var theURL = 'https://www.googleapis.com/books/v1/volumes?q=intitle:' + title + '&key=' + apiKey;
+  var apiKey = 'AIzaSyCST9ncJG5QX84gOwpFJe_qMO5NMXPfQCw';
+
+  var theURL = 'https://www.googleapis.com/books/v1/volumes?q=' + type + ':' + term + '&key=' + apiKey;
 
   var p1 = new Promise(function(resolve, reject) {
     request(theURL, function(error, response, body) {
@@ -364,8 +366,62 @@ app.post('/bookSearch', jsonParser, function(req,res) {
     console.log(reason)
  });
 
-})
+});
 
+app.post('/wordSearch', jsonParser, function(req, res) {
+  var term = req.body.term;
+  var type = req.body.type;
+
+  if(type === 'japaneasy') {
+    /*Search By English Word Only Using Japaneasy*/
+    dict(term).then(function(result) {
+      console.log(result);
+      res.send(result);
+    });
+  }
+
+  if(type === 'wwwjdic-english') {
+    var theURL = 'http://nihongo.monash.edu/cgi-bin/wwwjdic?1ZUE' + term;
+
+    var p1 = new Promise(function(resolve, reject) {
+      request(theURL, function(error, response, body) {
+        if(!error && response.statusCode == 200) {
+         resolve(response);
+       }
+      })
+    })
+
+    Promise.all([p1]).then(function(value) {
+      console.log(value);
+       res.json(value);
+    }, function(reason) {
+      console.log(reason)
+   });
+  }
+
+  if(type === 'wwwjdic-japanese') {
+    var theTerm = encodeURIComponent(term);
+
+    //1 = EDICT, Z = backdoor entry (raw dictionary display), U = where the lookup text is in UTF-8, J = for Japanese keys
+    var theURL = 'http://nihongo.monash.edu/cgi-bin/wwwjdic?1ZUJ' + theTerm;
+
+    var p1 = new Promise(function(resolve, reject) {
+      request(theURL, function(error, response, body) {
+        if(!error && response.statusCode == 200) {
+         resolve(response);
+       }
+      })
+    })
+
+    Promise.all([p1]).then(function(value) {
+      console.log(value);
+      res.json(value);
+    }, function(reason) {
+      console.log(reason)
+   });
+  }
+
+});
 
 var port = process.env.PORT || 1337;
 app.listen(port, function() {
