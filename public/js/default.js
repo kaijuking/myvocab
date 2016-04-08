@@ -1501,20 +1501,157 @@ function bookSearch(searchTerm, searchType) {
 function bookResults(content) {
   var theItems = JSON.parse(content[0].body);
   var length = theItems.items.length;
-  console.log(length);
-  console.log(theItems);
+  var parent = document.getElementById('book-results');
+  var child = document.getElementById('book-results-container');
+
+  if(child != null) {
+    parent.removeChild(child);
+    var mediaContainer = document.createElement('div');
+    mediaContainer.setAttribute('id', 'book-results-container');
+    parent.appendChild(mediaContainer);
+  }
 
   for(var i = 0; i < theItems.items.length; i++) {
-    // console.log(theItems.items[i]);
+
+    var media = document.createElement('div');
+    media.setAttribute('class', 'media');
+
+    var mediaLeft = document.createElement('div');
+    mediaLeft.setAttribute('class', 'media-left');
+
+    var mediaBody = document.createElement('div');
+    mediaBody.setAttribute('class', 'media-body');
+
     if(theItems.items[i].volumeInfo.imageLinks) {
-      console.log(theItems.items[i].volumeInfo.imageLinks.thumbnail);
+      var link = document.createElement('a');
+      link.setAttribute('href', theItems.items[i].volumeInfo.infoLink);
+
+      var image = document.createElement('img');
+      image.setAttribute('class', 'media-object');
+      image.setAttribute('src', theItems.items[i].volumeInfo.imageLinks.thumbnail);
+      image.setAttribute('alt', '...');
+
+      link.appendChild(image);
+      mediaLeft.appendChild(link);
+    } else {
+      var noImage = document.createElement('p');
+      noImage.textContent = 'N/A'
+      mediaLeft.appendChild(noImage);
     }
 
-    console.log(theItems.items[i].volumeInfo.title);
-    console.log(theItems.items[i].volumeInfo.subtitle);
-    console.log(theItems.items[i].volumeInfo.publisher);
-    console.log(theItems.items[i].volumeInfo.publishedDate);
-    console.log(theItems.items[i].volumeInfo.industryIdentifiers);
+    if(theItems.items[i].volumeInfo.title) {
+      var bTitle = document.createElement('b');
+      var spanTitle = document.createElement('span');
+      var titleLink = document.createElement('a');
+      var titleBreak = document.createElement('br');
+      bTitle.textContent = 'Title: ';
+      titleLink.setAttribute('href', theItems.items[i].volumeInfo.infoLink);
+      titleLink.textContent = theItems.items[i].volumeInfo.title;
+      spanTitle.appendChild(titleLink);
+      mediaBody.appendChild(bTitle);
+      mediaBody.appendChild(spanTitle);
+      mediaBody.appendChild(titleBreak);
+    } else {
+      var bTitle = document.createElement('b');
+      var spanTitle = document.createElement('span');
+      var titleBreak = document.createElement('br');
+      bTitle.textContent = 'Title: ';
+      spanTitle.textContent = 'N/A';
+      mediaBody.appendChild(bTitle);
+      mediaBody.appendChild(spanTitle);
+      mediaBody.appendChild(titleBreak);
+    }
+
+    if(theItems.items[i].volumeInfo.subtitle) {
+      var bSubtitle = document.createElement('b');
+      var spanSubtitle = document.createElement('span');
+      var subtitleBreak = document.createElement('br');
+      bSubtitle.textContent = 'Subtitle: ';
+      spanSubtitle.textContent = theItems.items[i].volumeInfo.subtitle;
+      mediaBody.appendChild(bSubtitle);
+      mediaBody.appendChild(spanSubtitle);
+      mediaBody.appendChild(subtitleBreak);
+    } else {
+      var bSubtitle = document.createElement('b');
+      var spanSubtitle = document.createElement('span');
+      var subtitleBreak = document.createElement('br');
+      bSubtitle.textContent = 'Subtitle: ';
+      spanSubtitle.textContent = 'N/A';
+      mediaBody.appendChild(bSubtitle);
+      mediaBody.appendChild(spanSubtitle);
+      mediaBody.appendChild(subtitleBreak);
+    }
+
+    if(theItems.items[i].volumeInfo.publisher) {
+      var bPublisher = document.createElement('b');
+      var spanPublisher = document.createElement('span');
+      var publisherBreak = document.createElement('br');
+      bPublisher.textContent = 'Publisher: ';
+      spanPublisher.textContent = theItems.items[i].volumeInfo.publisher;
+      mediaBody.appendChild(bPublisher);
+      mediaBody.appendChild(spanPublisher);
+      mediaBody.appendChild(publisherBreak);
+    } else {
+      var bPublisher = document.createElement('b');
+      var spanPublisher = document.createElement('span');
+      var publisherBreak = document.createElement('br');
+      bPublisher.textContent = 'Publisher: ';
+      spanPublisher.textContent = 'N/A';
+      mediaBody.appendChild(bPublisher);
+      mediaBody.appendChild(spanPublisher);
+      mediaBody.appendChild(publisherBreak);
+    }
+
+    if(theItems.items[i].volumeInfo.publishedDate) {
+      var bPublishedDate = document.createElement('b');
+      var spanPublishedDate = document.createElement('span');
+      var publishedDateBreak = document.createElement('br');
+      bPublishedDate.textContent = 'Published: ';
+      spanPublishedDate.textContent = theItems.items[i].volumeInfo.publishedDate;
+      mediaBody.appendChild(bPublishedDate);
+      mediaBody.appendChild(spanPublishedDate);
+      mediaBody.appendChild(publishedDateBreak);
+    } else {
+      var bPublishedDate = document.createElement('b');
+      var spanPublishedDate = document.createElement('span');
+      var publishedDateBreak = document.createElement('br');
+      bPublishedDate.textContent = 'Published: ';
+      spanPublishedDate.textContent = 'N/A';
+      mediaBody.appendChild(bPublishedDate);
+      mediaBody.appendChild(spanPublishedDate);
+      mediaBody.appendChild(publishedDateBreak);
+    }
+
+    if(theItems.items[i].volumeInfo.industryIdentifiers) {
+      var bISBN = document.createElement('b');
+      var spanISBN = document.createElement('span');
+      var isbnBreak = document.createElement('br');
+      bISBN.textContent = 'ISBN: ';
+
+      for(var n = 0; n < theItems.items[i].volumeInfo.industryIdentifiers.length; n++) {
+        spanISBN.textContent =  '(' + theItems.items[i].volumeInfo.industryIdentifiers[n].type + ') ' + theItems.items[i].volumeInfo.industryIdentifiers[n].identifier + ' ' + spanISBN.textContent;
+      }
+
+      mediaBody.appendChild(bISBN);
+      mediaBody.appendChild(spanISBN);
+      mediaBody.appendChild(isbnBreak);
+    } else {
+      var bISBN = document.createElement('b');
+      var spanISBN = document.createElement('span');
+      var isbnBreak = document.createElement('br');
+      bISBN.textContent = 'ISBN: ';
+      spanISBN.textContent = 'N/A';
+      mediaBody.appendChild(bISBN);
+      mediaBody.appendChild(spanISBN);
+      mediaBody.appendChild(isbnBreak);
+    }
+
+    media.appendChild(mediaLeft);
+    media.appendChild(mediaBody);
+    var divider = document.createElement('hr');
+    media.appendChild(divider);
+    mediaContainer.appendChild(media);
+
   }
 }
 
