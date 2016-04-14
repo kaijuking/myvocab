@@ -20,6 +20,12 @@ Word search results are accomplished using API calls provided by:
 
 Book search results are provided by Google's <a href='https://developers.google.com/books/'>Books API</a>.
 
+# User Accounts
+Here are several user accounts you can use to login into "Nakigoe".
+<ul>
+<li>Username = kaijuking, Password = 12345</li>
+</ul>
+
 # Screenshots
 <img src="https://github.com/kaijuking/myvocab/blob/master/public/images/rsz_home1.png" width="15%"></img>
 <img src="https://github.com/kaijuking/myvocab/blob/master/public/images/rsz_home2.png" width="15%"></img>
