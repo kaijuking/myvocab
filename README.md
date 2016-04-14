@@ -12,7 +12,7 @@ For a live demo of my application please go here: http://myvocab.herokuapp.com/
 <li>Look up words (both English and Japanese) as well as search for books to help you study!</li>
 </ul>
 
-Word search results are provided by:
+Word search results are accomplished using API calls provided by:
 <ul>
 <li>Jim Breen's <a href='http://gengo.com/wwwjdic/cgi-data/wwwjdic?1C'>site</a></li>
 <li>NPM Module "japaneasy"</li>
