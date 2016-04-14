@@ -1,5 +1,5 @@
 # myvocab
-A flash card program for studyig Japanese. Create and study your very own flashcards! <br><br>
+A flash card program for studying Japanese. Create and study your very own flashcards! <br><br>
 For a live demo of my application please go here: http://myvocab.herokuapp.com/
 
 # Features
