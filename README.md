@@ -18,7 +18,7 @@ Word search results are accomplished using API calls provided by:
 <li>NPM Module "japaneasy"</li>
 </ul>
 
-Book search results are provided by Google's Books API.
+Book search results are provided by Google's <a href='https://developers.google.com/books/'>Books API</a>.
 
 # Screenshots
 <img src="https://github.com/kaijuking/myvocab/blob/master/public/images/rsz_home1.png" width="15%"></img>
