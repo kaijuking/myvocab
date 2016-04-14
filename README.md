@@ -1,11 +1,26 @@
 # myvocab
-A flash card program for studyig Japanese. Create and study your very own flashcards!
-- View and update your own decks
-- Edit the deck info and cards of each deck
-- Create a new deck
-- Study the cards in your deck by showing/hiding the meaning of each card
-- Look up words (both English and Japanese) as well as search for books to help you study! 
+A flash card program for studyig Japanese. Create and study your very own flashcards! <br><br>
+For a live demo of my application please go here: http://myvocab.herokuapp.com/
 
+# Features
+"myvocab" has the following features:
+<ul>
+<li>View and update your own decks</li>
+<li>Edit the deck info and cards of each deck</li>
+<li>Create a new deck</li>
+<li>Study the cards in your deck by showing/hiding the meaning of each card</li>
+<li>Look up words (both English and Japanese) as well as search for books to help you study!</li>
+</ul>
+
+Word search results are provided by:
+<ul>
+<li>Jim Breen's <a href='http://gengo.com/wwwjdic/cgi-data/wwwjdic?1C'>site</a></li>
+<li>NPM Module "japaneasy"</li>
+</ul>
+
+Book search results are provided by Google's Books API.
+
+# Screenshots
 <img src="https://github.com/kaijuking/myvocab/blob/master/public/images/rsz_home1.png" width="15%"></img>
 <img src="https://github.com/kaijuking/myvocab/blob/master/public/images/rsz_home2.png" width="15%"></img>
 <img src="https://github.com/kaijuking/myvocab/blob/master/public/images/rsz_home3.png" width="15%"></img>
