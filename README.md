@@ -14,7 +14,7 @@ For a live demo of my application please go here: http://myvocab.herokuapp.com/
 
 Word search results are accomplished using API calls provided by:
 <ul>
-<li>Jim Breen's <a href='http://gengo.com/wwwjdic/wwwjdicinf.html#backdoor_tag'>site</a></li>
+<li>Jim Breen's site <a href='http://gengo.com/wwwjdic/wwwjdicinf.html#backdoor_tag'>wwwjdic</a></li>
 <li>NPM Module "japaneasy"</li>
 </ul>
 
